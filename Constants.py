@@ -1,3 +1,5 @@
+twoPlayerOpt = False
+
 # screen dimensions
 CELL_SIZE = 35
 NO_OF_CELLS = 20
