@@ -3,7 +3,11 @@ from Constants import NO_OF_CELLS, BANNER_HEIGHT
 from Utility import Grid
 from DFS import DFS
 from BFS import BFS
+from UCS import UCS
+from GREEDY import GREEDY
 from A_STAR import A_STAR
+from HILL_CLIMBING import HILL_CLIMBING
+from BEAM import BEAM
 from GA import *
 from HUMAN import HUMAN
 
@@ -114,8 +118,24 @@ class GameController:
             self.algo = DFS(self.grid)
             self.snake = Snake()
 
+        elif algo_type == 'GREEDY':
+            self.algo = GREEDY(self.grid)
+            self.snake = Snake()
+
         elif algo_type == 'ASTAR':
             self.algo = A_STAR(self.grid)
+            self.snake = Snake()
+            
+        elif algo_type == 'UCS':
+            self.algo = UCS(self.grid)
+            self.snake = Snake()
+            
+        elif algo_type == 'HILL_CLIMBING':
+            self.algo = HILL_CLIMBING(self.grid)
+            self.snake = Snake()
+            
+        elif algo_type == 'BEAM':
+            self.algo = BEAM(self.grid)
             self.snake = Snake()
 
         elif algo_type == 'GA':

@@ -12,7 +12,7 @@ class Menu:
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = -150
         self.title_size = 50
-        self.option_size = 28
+        self.option_size = 20
 
     def draw_cursor(self):
         self.game.draw_text(
@@ -126,17 +126,25 @@ class onePlayerMenu(Menu):
 
         self.cursorBFS = MENU_COLOR
         self.cursorDFS = WHITE
+        self.cursorUCS = WHITE
+        self.cursorGREEDY = WHITE
         self.cursorASTAR = WHITE
+        self.cursorHILLCLIMBING = WHITE
+        self.cursorBEAM = WHITE
         self.cursorGA = WHITE
         self.cursorHuman = WHITE
         self.cursorQuit = WHITE
 
         self.BFSx, self.BFSy = self.mid_size, self.mid_size - 50
         self.DFSx, self.DFSy = self.mid_size, self.mid_size + 0
-        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 50
-        self.GAx, self.GAy = self.mid_size, self.mid_size + 100
-        self.Humanx, self.Humany = self.mid_size, self.mid_size + 150
-        self.Quitx, self.Quity = self.mid_size, self.mid_size + 200
+        self.UCSx, self.UCSy = self.mid_size, self.mid_size + 50
+        self.GREEDYx, self.GREEDYy = self.mid_size, self.mid_size + 100
+        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 150
+        self.HILLCLIMBINGx, self.HILLCLIMBINGy = self.mid_size, self.mid_size + 200
+        self.BEAMx, self.BEAMy = self.mid_size, self.mid_size + 250
+        self.GAx, self.GAy = self.mid_size, self.mid_size + 300
+        self.Humanx, self.Humany = self.mid_size, self.mid_size + 350
+        self.Quitx, self.Quity = self.mid_size, self.mid_size + 400
 
         self.cursor_rect.midtop = (self.BFSx + self.offset, self.BFSy)
 
@@ -146,8 +154,16 @@ class onePlayerMenu(Menu):
             self.cursorBFS = MENU_COLOR
         elif self.state == 'DFS':
             self.cursorDFS = MENU_COLOR
+        elif self.state == 'UCS':
+            self.cursorUCS = MENU_COLOR
+        elif self.state == 'GREEDY':
+            self.cursorGREEDY = MENU_COLOR
         elif self.state == 'ASTAR':
             self.cursorASTAR = MENU_COLOR
+        elif self.state == 'HILLCLIMBING':
+            self.cursorHILLCLIMBING = MENU_COLOR
+        elif self.state == 'BEAM':
+            self.cursorBEAM = MENU_COLOR
         elif self.state == 'GA':
             self.cursorGA = MENU_COLOR
         elif self.state == 'HUMAN':
@@ -158,7 +174,11 @@ class onePlayerMenu(Menu):
     def clear_cursor_color(self):
         self.cursorBFS = WHITE
         self.cursorDFS = WHITE
+        self.cursorUCS = WHITE
+        self.cursorGREEDY = WHITE
         self.cursorASTAR = WHITE
+        self.cursorHILLCLIMBING = WHITE
+        self.cursorBEAM = WHITE
         self.cursorGA = WHITE
         self.cursorHuman = WHITE
         self.cursorQuit = WHITE
@@ -189,11 +209,35 @@ class onePlayerMenu(Menu):
                 x=self.DFSx,  y=self.DFSy,
                 color=self.cursorDFS
             )
+            
+            self.game.draw_text(
+                'UCS', size=self.option_size,
+                x=self.UCSx,  y=self.UCSy,
+                color=self.cursorUCS
+            )
+            
+            self.game.draw_text(
+                'GREEDY', size=self.option_size,
+                x=self.GREEDYx,  y=self.GREEDYy,
+                color=self.cursorGREEDY
+            )
 
             self.game.draw_text(
                 'AStar', size=self.option_size,
                 x=self.ASTARx,  y=self.ASTARy,
                 color=self.cursorASTAR
+            )
+            
+            self.game.draw_text(
+                'Hill Climbing', size=self.option_size,
+                x=self.HILLCLIMBINGx,  y=self.HILLCLIMBINGy,
+                color=self.cursorHILLCLIMBING
+            )
+            
+            self.game.draw_text(
+                'Beam Search', size=self.option_size,
+                x=self.BEAMx,  y=self.BEAMy,
+                color=self.cursorBEAM
             )
 
             self.game.draw_text(
@@ -239,10 +283,30 @@ class onePlayerMenu(Menu):
 
             elif self.state == 'DFS':
                 self.cursor_rect.midtop = (
+                    self.UCSx + self.offset, self.UCSy)
+                self.state = 'UCS'
+                
+            elif self.state == 'UCS':
+                self.cursor_rect.midtop = (
+                    self.GREEDYx + self.offset, self.GREEDYy)
+                self.state = 'GREEDY'
+                
+            elif self.state == 'GREEDY':
+                self.cursor_rect.midtop = (
                     self.ASTARx + self.offset, self.ASTARy)
                 self.state = 'ASTAR'
 
             elif self.state == 'ASTAR':
+                self.cursor_rect.midtop = (
+                    self.HILLCLIMBINGx + self.offset, self.HILLCLIMBINGy)
+                self.state = 'HILLCLIMBING'
+                
+            elif self.state == 'HILLCLIMBING':
+                self.cursor_rect.midtop = (
+                    self.BEAMx + self.offset, self.BEAMy)
+                self.state = 'BEAM'
+                
+            elif self.state == 'BEAM':
                 self.cursor_rect.midtop = (
                     self.GAx + self.offset, self.GAy)
                 self.state = 'GA'
@@ -277,16 +341,36 @@ class onePlayerMenu(Menu):
                 self.cursor_rect.midtop = (
                     self.BFSx + self.offset, self.BFSy)
                 self.state = 'BFS'
-
-            elif self.state == 'ASTAR':
+                
+            elif self.state == 'UCS':
                 self.cursor_rect.midtop = (
                     self.DFSx + self.offset, self.DFSy)
                 self.state = 'DFS'
 
-            elif self.state == 'GA':
+            elif self.state == 'GREEDY':
+                self.cursor_rect.midtop = (
+                    self.UCSx + self.offset, self.UCSy)
+                self.state = 'UCS'
+
+            elif self.state == 'ASTAR':
+                self.cursor_rect.midtop = (
+                    self.GREEDYx + self.offset, self.GREEDYy)
+                self.state = 'GREEDY'
+
+            elif self.state == 'HILLCLIMBING':
                 self.cursor_rect.midtop = (
                     self.ASTARx + self.offset, self.ASTARy)
                 self.state = 'ASTAR'
+
+            elif self.state == 'BEAM':
+                self.cursor_rect.midtop = (
+                    self.HILLCLIMBINGx + self.offset, self.HILLCLIMBINGy)
+                self.state = 'HILLCLIMBING'
+
+            elif self.state == 'GA':
+                self.cursor_rect.midtop = (
+                    self.BEAMx + self.offset, self.BEAMy)
+                self.state = 'BEAM'
             
             elif self.state == 'QUIT':
                 self.cursor_rect.midtop = (

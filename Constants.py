@@ -1,7 +1,7 @@
 twoPlayerOpt = False
 
 # screen dimensions
-CELL_SIZE = 35
+CELL_SIZE = 30
 NO_OF_CELLS = 20
 BANNER_HEIGHT = 2
 
