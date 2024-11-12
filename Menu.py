@@ -392,7 +392,7 @@ class twoPlayerMenu_P1(Menu):
 
         if self.game.START:
             if self.state == 'QUIT':
-                self.game.curr_menu = self.game.MainMenu
+                self.game.curr_menu = self.game.main_menu
             else:
                 self.game.curr_menu = self.game.TwoPlayerMenu_P2
             self.run_display = False
