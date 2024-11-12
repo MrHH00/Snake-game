@@ -6,6 +6,7 @@ from BFS import BFS
 from A_STAR import A_STAR
 from GA import *
 from HUMAN import HUMAN
+from BestFirstSearch import BestFirstSearch
 
 
 class GameController:
@@ -129,7 +130,9 @@ class GameController:
             self.algo = HUMAN(self.grid)
             self.snake = Snake()
 
-
+        elif algo_type == 'BESTFIRST':
+            self.algo = BestFirstSearch(self.grid)
+            self.snake = Snake()
 
     def ai_play(self, algorithm):
         self.set_algorithm(algorithm)

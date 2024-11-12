@@ -124,14 +124,16 @@ class onePlayerMenu(Menu):
         self.cursorBFS = MENU_COLOR
         self.cursorDFS = WHITE
         self.cursorASTAR = WHITE
+        self.cursorBESTFIRST = WHITE
         self.cursorGA = WHITE
         self.cursorHuman = WHITE
 
         self.BFSx, self.BFSy = self.mid_size, self.mid_size - 50
         self.DFSx, self.DFSy = self.mid_size, self.mid_size + 0
         self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 50
-        self.GAx, self.GAy = self.mid_size, self.mid_size + 100
-        self.Humanx, self.Humany = self.mid_size, self.mid_size + 150
+        self.BESTFIRSTx, self.BESTFIRSTy = self.mid_size, self.mid_size + 100
+        self.GAx, self.GAy = self.mid_size, self.mid_size + 150
+        self.Humanx, self.Humany = self.mid_size, self.mid_size + 200
 
         self.cursor_rect.midtop = (self.BFSx + self.offset, self.BFSy)
 
@@ -143,6 +145,8 @@ class onePlayerMenu(Menu):
             self.cursorDFS = MENU_COLOR
         elif self.state == 'ASTAR':
             self.cursorASTAR = MENU_COLOR
+        elif self.state == 'BESTFIRST':
+            self.cursorBESTFIRST = MENU_COLOR
         elif self.state == 'GA':
             self.cursorGA = MENU_COLOR
         elif self.state == 'HUMAN':
@@ -152,6 +156,7 @@ class onePlayerMenu(Menu):
         self.cursorBFS = WHITE
         self.cursorDFS = WHITE
         self.cursorASTAR = WHITE
+        self.cursorBESTFIRST = WHITE
         self.cursorGA = WHITE
         self.cursorHuman = WHITE
 
@@ -185,6 +190,12 @@ class onePlayerMenu(Menu):
                 'AStar', size=self.option_size,
                 x=self.ASTARx,  y=self.ASTARy,
                 color=self.cursorASTAR
+            )
+
+            self.game.draw_text(
+                'Best First Search', size=self.option_size,
+                x=self.BESTFIRSTx,  y=self.BESTFIRSTy,
+                color=self.cursorBESTFIRST
             )
 
             self.game.draw_text(
@@ -227,6 +238,11 @@ class onePlayerMenu(Menu):
 
             elif self.state == 'ASTAR':
                 self.cursor_rect.midtop = (
+                    self.BESTFIRSTx + self.offset, self.BESTFIRSTy)
+                self.state = 'BESTFIRST'
+
+            elif self.state == 'BESTFIRST':
+                self.cursor_rect.midtop = (
                     self.GAx + self.offset, self.GAy)
                 self.state = 'GA'
 
@@ -246,25 +262,25 @@ class onePlayerMenu(Menu):
                     self.GAx + self.offset, self.GAy)
                 self.state = 'GA'
             
-            elif self.state == 'BFS':
+            elif self.state == 'GA':
                 self.cursor_rect.midtop = (
-                    self.Humanx + self.offset, self.Humany)
-                self.state = 'HUMAN'
+                    self.BESTFIRSTx + self.offset, self.BESTFIRSTy)
+                self.state = 'BESTFIRST'
 
-            elif self.state == 'DFS':
+            elif self.state == 'BESTFIRST':
                 self.cursor_rect.midtop = (
-                    self.BFSx + self.offset, self.BFSy)
-                self.state = 'BFS'
+                    self.ASTARx + self.offset, self.ASTARy)
+                self.state = 'ASTAR'
 
             elif self.state == 'ASTAR':
                 self.cursor_rect.midtop = (
                     self.DFSx + self.offset, self.DFSy)
                 self.state = 'DFS'
 
-            elif self.state == 'GA':
+            elif self.state == 'DFS':
                 self.cursor_rect.midtop = (
-                    self.ASTARx + self.offset, self.ASTARy)
-                self.state = 'ASTAR'
+                    self.BFSx + self.offset, self.BFSy)
+                self.state = 'BFS'
 
 class twoPlayerMenu(Menu):
     def __init__(self, game):
