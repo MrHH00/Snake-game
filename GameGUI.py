@@ -273,8 +273,12 @@ class GameGUI:
                     self.controller2.load_model()
                     self.load_model = False
 
-                self.controller1.ai_play(self.TwoPlayerMenu_P1.state)  # play
-                self.controller2.ai_play(self.TwoPlayerMenu_P2.state)  # play
+                import Constants
+                if (Constants.twoPlayerOpt == False):
+                    self.controller2.ai_play(self.OnePlayerMenu.state)
+                else:
+                    self.controller1.ai_play(self.TwoPlayerMenu_P1.state)  # play
+                    self.controller2.ai_play(self.TwoPlayerMenu_P2.state)  # play
 
 
                 if self.controller1.end == True :  # Only path ai and trained model

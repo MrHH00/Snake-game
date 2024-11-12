@@ -86,11 +86,13 @@ class MainMenu(Menu):
     
     def check_input(self):
         self.move_cursor()
-
         if self.game.START:
+            import Constants
             if self.state == '1 Player':
+                Constants.twoPlayerOpt = False
                 self.game.curr_menu = self.game.OnePlayerMenu
             elif self.state == '2 Player':
+                Constants.twoPlayerOpt = True
                 self.game.curr_menu = self.game.TwoPlayerMenu_P1
             self.run_display = False
             
@@ -211,8 +213,6 @@ class onePlayerMenu(Menu):
                 x=self.Quitx,  y=self.Quity,
                 color=self.cursorQuit
             )
-
-
 
             self.draw_cursor()
             self.change_cursor_color()
