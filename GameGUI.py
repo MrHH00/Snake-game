@@ -293,7 +293,8 @@ class GameGUI:
 
                 elif event.key == pygame.K_q:  # on q return
                     self.BACK = True
-                    self.controller.reset()
+                    self.controller1.reset()
+                    self.controller2.reset()
 
                 elif event.key == pygame.K_SPACE:  # space view path or hide training snakes
                     self.view_path = not self.view_path
