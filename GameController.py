@@ -6,6 +6,10 @@ from BFS import BFS
 from A_STAR import A_STAR
 from GA import *
 from HUMAN import HUMAN
+from BestFirstSearch import BestFirstSearch
+from UCS import UCS
+from HillClimbing import HillClimbing
+from BeamSearch import BeamSearch
 
 
 class GameController:
@@ -129,7 +133,21 @@ class GameController:
             self.algo = HUMAN(self.grid)
             self.snake = Snake()
 
+        elif algo_type == 'Best First Search':
+            self.algo = BestFirstSearch(self.grid)
+            self.snake = Snake()
 
+        elif algo_type == 'UCS':
+            self.algo = UCS(self.grid)
+            self.snake = Snake()
+
+        elif algo_type == 'Hill Climbing':
+            self.algo = HillClimbing(self.grid)
+            self.snake = Snake()
+
+        elif algo_type == 'Beam Search':
+            self.algo = BeamSearch(self.grid)
+            self.snake = Snake()
 
     def ai_play(self, algorithm):
         self.set_algorithm(algorithm)
