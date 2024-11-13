@@ -2,6 +2,7 @@ import pygame
 from Constants import *
 from Menu import *
 from GameController import GameController
+from pygame.math import Vector2
 from GA import *
 import sys
 
@@ -45,6 +46,8 @@ class GameGUI:
         self.view_path = False
         
         self.banana = pygame.image.load('images/banana-30px.png').convert_alpha()
+        
+
         
 
     def game_loop(self):
@@ -190,11 +193,63 @@ class GameGUI:
             pygame.draw.rect(display, WINDOW_COLOR, body_rect, 3)
 
     def draw_snake(self, snake,display):
-        self.draw_snake_head(snake,display)  # draw head
+        # self.draw_snake_head(snake,display)  # draw head
 
-        for body in snake.body[1:]:
-            self.draw_snake_body(body,display)  # draw body
+        # for body in snake.body[1:]:
+        #     self.draw_snake_body(body,display)  # draw body
+        
+        self.update_head_graphics(snake)
+        self.update_tail_graphics(snake)
+        # for block in self.body:
+        #     #create a rectangle      pygame.Rect(x,y,width,height)
+        #     block_rect = pygame.Rect(int(block.x*cell_size),int(block.y*cell_size),cell_size,cell_size)
+        #     #draw the rectangle
+        #     pygame.draw.rect(screen,(183,111,122),block_rect)
+        
+        # we 
+        for index,block in enumerate(snake.body):
+            #1. create a rectangle for positioning
+            x_pos = int(block.x*CELL_SIZE)
+            y_pos = int(block.y*CELL_SIZE)
+            block_rect = pygame.Rect(x_pos,y_pos,CELL_SIZE,CELL_SIZE)
+            #2. direction is the face heading
+            #snake head direction update
+            if index == 0:
+                display.blit(snake.head,block_rect)
+            #snake tail direction update
+            elif index == len(snake.body)-1:
+                display.blit(snake.tail,block_rect)
+            #snake body direction update
+            else: 
+                previous_block = snake.body[index+1] - block
+                next_block = snake.body[index-1] - block
+                if previous_block.x == next_block.x:
+                    display.blit(snake.body_vertical,block_rect)
+                elif previous_block.y == next_block.y:
+                    display.blit(snake.body_horizontal,block_rect)
+                else:
+                    if previous_block.x == -1 and next_block.y == -1 or previous_block.y == -1 and next_block.x == -1:
+                        display.blit(snake.body_tl,block_rect)
+                    elif previous_block.x == -1 and next_block.y == 1 or previous_block.y == 1 and next_block.x == -1:
+                        display.blit(snake.body_bl,block_rect)
+                    elif previous_block.x == 1 and next_block.y == -1 or previous_block.y == -1 and next_block.x == 1:
+                        display.blit(snake.body_tr,block_rect)
+                    elif previous_block.x == 1 and next_block.y == 1 or previous_block.y == 1 and next_block.x == 1:
+                        display.blit(snake.body_br,block_rect)
 
+    def update_head_graphics(self,snake):
+        head_relation = snake.body[1] - snake.body[0]
+        if head_relation == Vector2(1,0): snake.head = snake.head_left
+        elif head_relation == Vector2(-1,0): snake.head = snake.head_right
+        elif head_relation == Vector2(0,1): snake.head = snake.head_up
+        elif head_relation == Vector2(0,-1): snake.head = snake.head_down
+        
+    def update_tail_graphics(self,snake):
+        tail_relation = snake.body[-2] - snake.body[-1]
+        if tail_relation == Vector2(1,0): snake.tail = snake.tail_left
+        elif tail_relation == Vector2(-1,0): snake.tail = snake.tail_right
+        elif tail_relation == Vector2(0,1): snake.tail = snake.tail_up
+        elif tail_relation == Vector2(0,-1): snake.tail = snake.tail_down
 
     def draw_fruit(self, fruit, display):
         x = int(fruit.x * CELL_SIZE)
