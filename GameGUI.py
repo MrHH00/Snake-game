@@ -75,7 +75,7 @@ class GameGUI:
         # draw banner and stats
         self.draw_grid(display)
         self.draw_banner(display)
-        self.draw_game_stats(controller)
+        self.draw_game_stats(controller,display)
 
         if self.curr_menu.state != 'GA' or controller.model_loaded:  # Path Ai or trained GA
             fruit = controller.get_fruit_pos()
@@ -84,7 +84,7 @@ class GameGUI:
             
             self.draw_fruit(fruit, display)
             self.draw_snake(snake,display)
-            self.draw_score(controller)
+            self.draw_score(controller,display)
 
             if not controller.model_loaded:
                 self.draw_path(controller,display)  # only path Ai has a path
@@ -107,7 +107,7 @@ class GameGUI:
                         pygame.draw.rect(display, grid_color, grid_rect)
                         
 
-    def draw_game_stats(self, controller):
+    def draw_game_stats(self, controller,display):
         if self.curr_menu.state != 'GA':  # path Ai algo
             instruction = 'Space to view Ai path, W to speed up, Q to go back'
 
@@ -146,10 +146,27 @@ class GameGUI:
         )
 
         # current Algo Title
-        self.draw_text(
-            self.curr_menu.state, size=30,
-            x=self.SIZE/2, y=CELL_SIZE,
-        )
+        if twoPlayerOpt == False: 
+            self.draw_text_surface(
+                self.OnePlayerMenu.state, size=30,
+                x=self.SIZE/2, y=CELL_SIZE,
+                display=display, color=WINDOW_COLOR
+            )
+        elif controller == self.controller1:
+            self.draw_text_surface(
+                self.TwoPlayerMenu_P1.state, size=30,
+                x=self.SIZE/2, y=CELL_SIZE,
+                display=display, color=WINDOW_COLOR
+            )
+        elif controller == self.controller2:
+            self.draw_text_surface(
+                self.TwoPlayerMenu_P2.state, size=30,
+                x=self.SIZE/2, y=CELL_SIZE,
+                display=display, color=WINDOW_COLOR
+            )
+
+
+
 
     def draw_all_snakes_GA(self):
         if not self.view_path:  # have all snakes visible by default
@@ -264,11 +281,11 @@ class GameGUI:
         banner = pygame.Rect(0, 0, self.SIZE, BANNER_HEIGHT * CELL_SIZE)
         pygame.draw.rect(display, BANNER_COLOR, banner)
 
-    def draw_score(self,controller):
+    def draw_score(self,controller,display):
         score_text = 'Score: ' + str(controller.get_score()) 
         score_x = self.SIZE - (CELL_SIZE + 2*len(score_text)) - 20
         score_y = CELL_SIZE
-        self.draw_text(score_text, 20, score_x, score_y, WINDOW_COLOR)
+        self.draw_text_surface(score_text, 20, score_x, score_y, display,WINDOW_COLOR)
 
     def game_over(self):
         again = False
@@ -400,3 +417,10 @@ class GameGUI:
         text_rect.center = (x, y)
         self.display2.blit(text_surface, text_rect)
         self.display1.blit(text_surface, text_rect)
+        
+    def draw_text_surface(self, text, size, x, y, display,color=WINDOW_COLOR): 
+        font = pygame.font.Font(self.font_name, size)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
+        display.blit(text_surface, text_rect)

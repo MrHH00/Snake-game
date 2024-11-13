@@ -69,7 +69,7 @@ class MainMenu(Menu):
             self.game.draw_text(
                 'SNAKE EAT BANANA', size=self.title_size,
                 x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS),
-                color=TITLE_COLOR
+                color=TITLE_COLOR,
             )
 
             self.game.draw_text(
@@ -86,19 +86,19 @@ class MainMenu(Menu):
             self.game.draw_text(
                 '22110028  -  Nguyen Mai Huy Hoang', size=self.option_size,
                 x=self.huyhoangx,  y=self.huyhoangy,
-                color=TITLE_COLOR
+                color=SNAKE_COLOR
             )
             
             self.game.draw_text(
                 '22110076  -  Tran Trung Tin', size=self.option_size,
                 x=self.tintranx,  y=self.tintrany,
-                color=TITLE_COLOR
+                color=SNAKE_COLOR
             )
                         
             self.game.draw_text(
                 '22110028  -  Nguyen Nhat An', size=self.option_size,
                 x=self.nhatanx,  y=self.nhatany,
-                color=TITLE_COLOR
+                color=SNAKE_COLOR
             )
 
             self.draw_cursor()
