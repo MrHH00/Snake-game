@@ -17,6 +17,7 @@ class Snake:
         self.hidden = hidden
         self.network = NeuralNework(5, self.hidden, 3)
 
+
     def save_model(self, network, name):
         with open(name, "wb") as file:
             pickle.dump(network, file)

@@ -135,16 +135,16 @@ class onePlayerMenu(Menu):
         self.cursorHuman = WHITE
         self.cursorQuit = WHITE
 
-        self.BFSx, self.BFSy = self.mid_size, self.mid_size - 50
-        self.DFSx, self.DFSy = self.mid_size, self.mid_size + 0
-        self.UCSx, self.UCSy = self.mid_size, self.mid_size + 50
-        self.GREEDYx, self.GREEDYy = self.mid_size, self.mid_size + 100
-        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 150
-        self.HILLCLIMBINGx, self.HILLCLIMBINGy = self.mid_size, self.mid_size + 200
-        self.BEAMx, self.BEAMy = self.mid_size, self.mid_size + 250
-        self.GAx, self.GAy = self.mid_size, self.mid_size + 300
-        self.Humanx, self.Humany = self.mid_size, self.mid_size + 350
-        self.Quitx, self.Quity = self.mid_size, self.mid_size + 400
+        self.BFSx, self.BFSy = self.mid_size, self.mid_size - 200
+        self.DFSx, self.DFSy = self.mid_size, self.mid_size - 150
+        self.UCSx, self.UCSy = self.mid_size, self.mid_size - 100
+        self.GREEDYx, self.GREEDYy = self.mid_size, self.mid_size - 50
+        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 0
+        self.HILLCLIMBINGx, self.HILLCLIMBINGy = self.mid_size, self.mid_size + 50
+        self.BEAMx, self.BEAMy = self.mid_size, self.mid_size + 100
+        self.GAx, self.GAy = self.mid_size, self.mid_size + 150
+        self.Humanx, self.Humany = self.mid_size, self.mid_size + 200
+        self.Quitx, self.Quity = self.mid_size, self.mid_size + 250
 
         self.cursor_rect.midtop = (self.BFSx + self.offset, self.BFSy)
 
@@ -195,7 +195,7 @@ class onePlayerMenu(Menu):
 
             self.game.draw_text(
                 'Ai Snake Game', size=self.title_size,
-                x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS),
+                x=self.game.SIZE/2, y=self.game.SIZE/2 - 250,
                 color=TITLE_COLOR
             )
 

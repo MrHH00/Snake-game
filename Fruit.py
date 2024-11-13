@@ -1,9 +1,10 @@
 from pygame.math import Vector2
 from Constants import BANNER_HEIGHT, NO_OF_CELLS, USER_SEED
 import random
+import pygame
+
 
 random.seed(USER_SEED)
-
 
 class Fruit:
     def __init__(self):

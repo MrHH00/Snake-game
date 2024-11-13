@@ -43,6 +43,9 @@ class GameGUI:
 
         self.load_model = False
         self.view_path = False
+        
+        self.banana = pygame.image.load('images/banana-30px.png').convert_alpha()
+        
 
     def game_loop(self):
         while self.playing:
@@ -67,6 +70,7 @@ class GameGUI:
 
     def draw_elements(self,controller,display):
         # draw banner and stats
+        self.draw_grid(display)
         self.draw_banner(display)
         self.draw_game_stats(controller)
 
@@ -74,6 +78,7 @@ class GameGUI:
             fruit = controller.get_fruit_pos()
             snake = controller.snake
 
+            
             self.draw_fruit(fruit, display)
             self.draw_snake(snake,display)
             self.draw_score(controller)
@@ -83,6 +88,21 @@ class GameGUI:
 
         else:  # training a GA model
             self.draw_all_snakes_GA()
+
+    def draw_grid(self,display):
+        grid_color = (209,74,54)
+        for row in range(NO_OF_CELLS):
+            if row % 2 == 0:
+                for col in range(NO_OF_CELLS):
+                    if col % 2 == 0:
+                        grid_rect = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                        pygame.draw.rect(display, grid_color,grid_rect)
+            else:
+                for col in range(NO_OF_CELLS):
+                    if col % 2 != 0:
+                        grid_rect = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                        pygame.draw.rect(display, grid_color, grid_rect)
+                        
 
     def draw_game_stats(self, controller):
         if self.curr_menu.state != 'GA':  # path Ai algo
@@ -175,12 +195,14 @@ class GameGUI:
         for body in snake.body[1:]:
             self.draw_snake_body(body,display)  # draw body
 
+
     def draw_fruit(self, fruit, display):
         x = int(fruit.x * CELL_SIZE)
         y = int(fruit.y * CELL_SIZE)
 
         fruit_rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
-        pygame.draw.rect(display, FRUIT_COLOR, fruit_rect)
+        # pygame.draw.rect(display, FRUIT_COLOR, fruit_rect)
+        display.blit(self.banana, fruit_rect)
 
 
     def draw_banner(self,display):
