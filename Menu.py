@@ -40,6 +40,9 @@ class MainMenu(Menu):
 
         self.onePlayerx, self.onePlayery = self.mid_size, self.mid_size - 50
         self.twoPlayerx, self.twoPlayery = self.mid_size, self.mid_size + 0
+        self.huyhoangx, self.huyhoangy = self.mid_size, self.mid_size + 150
+        self.tintranx, self.tintrany = self.mid_size, self.mid_size + 200
+        self.nhatanx, self.nhatany = self.mid_size, self.mid_size + 250
         
         self.cursor_rect.midtop = (self.onePlayerx + self.offset, self.onePlayery)
         
@@ -64,7 +67,7 @@ class MainMenu(Menu):
             self.game.display2.fill(WINDOW_COLOR)
 
             self.game.draw_text(
-                'Ai Snake Game', size=self.title_size,
+                'SNAKE EAT BANANA', size=self.title_size,
                 x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS),
                 color=TITLE_COLOR
             )
@@ -78,6 +81,24 @@ class MainMenu(Menu):
                 '2 Player', size=self.option_size,
                 x=self.twoPlayerx,  y=self.twoPlayery,
                 color=self.cursortwoPlayer
+            )
+            
+            self.game.draw_text(
+                '22110028  -  Nguyen Mai Huy Hoang', size=self.option_size,
+                x=self.huyhoangx,  y=self.huyhoangy,
+                color=TITLE_COLOR
+            )
+            
+            self.game.draw_text(
+                '22110076  -  Tran Trung Tin', size=self.option_size,
+                x=self.tintranx,  y=self.tintrany,
+                color=TITLE_COLOR
+            )
+                        
+            self.game.draw_text(
+                '22110028  -  Nguyen Nhat An', size=self.option_size,
+                x=self.nhatanx,  y=self.nhatany,
+                color=TITLE_COLOR
             )
 
             self.draw_cursor()
@@ -284,12 +305,12 @@ class onePlayerMenu(Menu):
 
     def move_cursor(self):
         if self.game.DOWNKEY:
-            if self.state == 'DFS':
+            if self.state == 'BFS':
                 self.cursor_rect.midtop = (
-                    self.BFSx + self.offset, self.BFSy)
-                self.state = 'BFS'
+                    self.DFSx + self.offset, self.DFSy)
+                self.state = 'DFS'
 
-            elif self.state == 'BFS':
+            elif self.state == 'DFS':
                 self.cursor_rect.midtop = (
                     self.UCSx + self.offset, self.UCSy)
                 self.state = 'UCS'
