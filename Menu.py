@@ -16,7 +16,7 @@ class Menu:
 
     def draw_cursor(self):
         self.game.draw_text(
-            '*', size=20,
+            '&', size=20,
             x=self.cursor_rect.x, y=self.cursor_rect.y,
             color=MENU_COLOR
         )

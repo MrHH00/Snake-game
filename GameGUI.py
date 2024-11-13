@@ -31,7 +31,7 @@ class GameGUI:
         self.display2 = pygame.Surface((self.SIZE, self.SIZE))
         self.window = pygame.display.set_mode((self.SIZE + 800, self.SIZE))
 
-        self.font_name = 'SquareAntiqua-Bold.ttf'
+        self.font_name = 'Gameplay.ttf'
 
         # ---- all menus ----
         self.main_menu = MainMenu(self)
@@ -140,7 +140,7 @@ class GameGUI:
 
         # instruction
         self.draw_text(
-            instruction, size=20,
+            instruction, size=16,
             x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
             color=WHITE
         )
@@ -307,7 +307,7 @@ class GameGUI:
                 )
             else:
                 # Path ai or trained model results
-                high_score = f'High Score: {self.controller.get_score()}'
+                high_score = f'High Score: {self.controller1.get_score()}'
 
             to_continue = 'Enter to Continue'
 
