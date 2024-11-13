@@ -13,9 +13,9 @@ class Node:
     def print(self):
         print(f"x: {self.x} y: {self.y}")
 
-    def equal(self, other):
-        return self.x == other.x and self.y == other.y
-
+    def equal(self, b):
+        return self.x == b.x and self.y == b.y
+    
     def __lt__(self, other):
         return (self.x, self.y) < (other.x, other.y)
 
@@ -35,7 +35,6 @@ class Node:
 
     def __ne__(self, other):
         return not self.__eq__(other)
-
 
 class Grid:
     def __init__(self):

@@ -1,5 +1,7 @@
+twoPlayerOpt = False
+
 # screen dimensions
-CELL_SIZE = 35
+CELL_SIZE = 30
 NO_OF_CELLS = 20
 BANNER_HEIGHT = 2
 
@@ -29,8 +31,8 @@ FRUIT_COLOR = (219, 90, 101)
 PATHCOLOR = (41, 255, 3, 50)
 
 # 4) related to screen
-WINDOW_COLOR = (40, 40, 41)
+WINDOW_COLOR = (196,53,41)
 WHITE = (241, 241, 241)
-MENU_COLOR = (94, 219, 111)
+MENU_COLOR = (42, 247, 241)
 BANNER_COLOR = (189, 189, 189)
-TITLE_COLOR = (133, 209, 242)
+TITLE_COLOR = (247, 247, 42)
