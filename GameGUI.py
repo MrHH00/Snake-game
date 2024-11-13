@@ -29,7 +29,7 @@ class GameGUI:
         self.SIZE = CELL_SIZE * NO_OF_CELLS
         self.display1 = pygame.Surface((self.SIZE, self.SIZE))
         self.display2 = pygame.Surface((self.SIZE, self.SIZE))
-        self.window = pygame.display.set_mode((self.SIZE + 800, self.SIZE))
+        self.window = pygame.display.set_mode((self.SIZE + 700, self.SIZE))
 
         self.font_name = 'Gameplay.ttf'
 
@@ -45,7 +45,7 @@ class GameGUI:
         self.load_model = False
         self.view_path = False
         
-        self.banana = pygame.image.load('images/banana-30px.png').convert_alpha()
+        self.banana = pygame.image.load('images/bunny_30px.png').convert_alpha()
         
 
         
@@ -65,7 +65,7 @@ class GameGUI:
                 self.draw_elements(self.controller2,self.display2)
             
             self.window.blit(self.display1, (0, 0))
-            self.window.blit(self.display2, (800, 0))
+            self.window.blit(self.display2, (700, 0))
 
             pygame.display.update()
             self.clock.tick(60)
@@ -266,7 +266,7 @@ class GameGUI:
 
     def draw_score(self,controller):
         score_text = 'Score: ' + str(controller.get_score())
-        score_x = self.SIZE - (CELL_SIZE + 2*len(score_text))
+        score_x = self.SIZE - (CELL_SIZE + 2*len(score_text)) - 20
         score_y = CELL_SIZE
         self.draw_text(score_text, 20, score_x, score_y, WINDOW_COLOR)
 
