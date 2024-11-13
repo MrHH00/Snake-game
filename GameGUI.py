@@ -146,7 +146,8 @@ class GameGUI:
         )
 
         # current Algo Title
-        if twoPlayerOpt == False: 
+        import Constants
+        if (Constants.twoPlayerOpt == False):
             self.draw_text_surface(
                 self.OnePlayerMenu.state, size=30,
                 x=self.SIZE/2, y=CELL_SIZE,
