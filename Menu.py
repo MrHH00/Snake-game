@@ -293,16 +293,6 @@ class onePlayerMenu(Menu):
                 self.cursor_rect.midtop = (
                     self.UCSx + self.offset, self.UCSy)
                 self.state = 'UCS'
-
-            elif self.state == 'UCS':
-                self.cursor_rect.midtop = (
-                    self.BestFirstSearchx + self.offset, self.BestFirstSearchy)
-                self.state = 'Best First Search'
-
-            elif self.state == 'DFS':
-                self.cursor_rect.midtop = (
-                    self.UCSx + self.offset, self.UCSy)
-                self.state = 'UCS'
                 
             elif self.state == 'UCS':
                 self.cursor_rect.midtop = (
