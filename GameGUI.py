@@ -107,18 +107,42 @@ class GameGUI:
                         pygame.draw.rect(display, grid_color, grid_rect)                  
 
     def draw_game_stats(self, controller,display):
-        if self.curr_menu.state != 'HUMAN':  # path Ai algo
-            instruction = 'Space to view Ai path, W to speed up, Q to go back'
 
-        else:  # human
-            instruction = 'W to speed up, Q to go back'
-            
+        import Constants
+        if (Constants.twoPlayerOpt):
+            if(self.TwoPlayerMenu_P1.state == 'HUMAN'):
+                instruction1 = 'W to speed up, Q to go back'
+                instruction2 = 'Space to view Ai path, W to speed up, Q to go back'
+            else:
+                instruction1 = 'Space to view Ai path, W to speed up, Q to go back'
+                instruction2 = 'Space to view Ai path, W to speed up, Q to go back'
+        elif (Constants.twoPlayerOpt == False):
+            if self.curr_menu.state != 'HUMAN':  # path Ai algo
+                instruction1 = 'Space to view Ai path, W to speed up, Q to go back'
+            else:  # human
+                instruction1 = 'W to speed up, Q to go back'
+        
         # instruction
-        self.draw_text(
-            instruction, size=16,
-            x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-            color=WHITE
-        )
+        if(Constants.twoPlayerOpt):
+            self.draw_text_surface(
+                instruction2, size=16,
+                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
+                display=self.display2,
+                color=WHITE
+            )
+            self.draw_text_surface(
+                instruction1, size=16,
+                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
+                display=self.display1,
+                color=WHITE
+            )
+        else:
+            self.draw_text_surface(
+                instruction1, size=16,
+                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
+                display=self.display2,
+                color=WHITE
+            )
 
         # current Algo Title
         import Constants
