@@ -464,7 +464,7 @@ class twoPlayerMenu_P1(Menu):
             self.game.draw_text(
                 'Choose Player 1 options: ', size=self.option_size,
                 x=self.titlex,  y=self.titley,
-                color=SNAKE_COLOR
+                color=MENU_COLOR
             )
 
             self.game.draw_text(
@@ -704,7 +704,7 @@ class twoPlayerMenu_P2(Menu):
             self.game.draw_text(
                 'Choose Player 2 options: ', size=self.option_size,
                 x=self.titlex,  y=self.titley,
-                color=SNAKE_COLOR
+                color=MENU_COLOR
             )
 
             self.game.draw_text(

@@ -47,9 +47,6 @@ class GameGUI:
         self.view_path = False
         
         self.banana = pygame.image.load('images/banana-30px.png').convert_alpha()
-        
-
-        
 
     def game_loop(self):
         while self.playing:
@@ -65,9 +62,14 @@ class GameGUI:
             if self.controller2.algo != None:
                 self.draw_elements(self.controller2,self.display2)
             
-            self.window.blit(self.background, (350, 0))
-            self.window.blit(self.display1, (0, 0))
-            self.window.blit(self.display2, (700, 0))
+            import Constants
+            if (Constants.twoPlayerOpt == False):
+                self.window.blit(self.display2, (350, 0))
+            else:
+                self.window.blit(self.background, (350, 0))
+                self.window.blit(self.display1, (0, 0))
+                self.window.blit(self.display2, (700, 0))
+            
 
             pygame.display.update()
             self.clock.tick(60)
@@ -302,8 +304,12 @@ class GameGUI:
                 color=WHITE
             )
 
-            self.window.blit(self.display2, (700, 0))
-            self.window.blit(self.display1, (0, 0))
+            import Constants
+            if (Constants.twoPlayerOpt == False):
+                self.window.blit(self.display2, (350, 0))
+            else:    
+                self.window.blit(self.display2, (700, 0))
+                self.window.blit(self.display1, (0, 0))
             pygame.display.update()
         self.controller1.reset()
         self.controller2.reset()
