@@ -1,7 +1,8 @@
 import pygame
-from Constants import *
-from Menu import *
-from GameController import GameController
+from app.Constants import *
+import app.Constants as Constants
+from app.Menu import *
+from app.GameController import GameController
 from pygame.math import Vector2
 import sys
 
@@ -62,7 +63,6 @@ class GameGUI:
             if self.controller2.algo != None:
                 self.draw_elements(self.controller2,self.display2)
             
-            import Constants
             if (Constants.twoPlayerOpt == False):
                 self.window.blit(self.display2, (350, 0))
             else:
@@ -107,45 +107,20 @@ class GameGUI:
                         pygame.draw.rect(display, grid_color, grid_rect)                  
 
     def draw_game_stats(self, controller,display):
+        if self.curr_menu.state != 'HUMAN':  # path Ai algo
+            instruction = 'Space to view Ai path, W to speed up, Q to go back'
 
-        import Constants
-        if (Constants.twoPlayerOpt):
-            if(self.TwoPlayerMenu_P1.state == 'HUMAN'):
-                instruction1 = 'W to speed up, Q to go back'
-                instruction2 = 'Space to view Ai path, W to speed up, Q to go back'
-            else:
-                instruction1 = 'Space to view Ai path, W to speed up, Q to go back'
-                instruction2 = 'Space to view Ai path, W to speed up, Q to go back'
-        elif (Constants.twoPlayerOpt == False):
-            if self.curr_menu.state != 'HUMAN':  # path Ai algo
-                instruction1 = 'Space to view Ai path, W to speed up, Q to go back'
-            else:  # human
-                instruction1 = 'W to speed up, Q to go back'
-        
+        else:  # human
+            instruction = 'W to speed up, Q to go back'
+            
         # instruction
-        if(Constants.twoPlayerOpt):
-            self.draw_text_surface(
-                instruction2, size=16,
-                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-                display=self.display2,
-                color=WHITE
-            )
-            self.draw_text_surface(
-                instruction1, size=16,
-                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-                display=self.display1,
-                color=WHITE
-            )
-        else:
-            self.draw_text_surface(
-                instruction1, size=16,
-                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-                display=self.display2,
-                color=WHITE
-            )
+        self.draw_text(
+            instruction, size=16,
+            x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
+            color=WHITE
+        )
 
         # current Algo Title
-        import Constants
         if (Constants.twoPlayerOpt == False):
             self.draw_text_surface(
                 self.OnePlayerMenu.state, size=30,
@@ -295,7 +270,6 @@ class GameGUI:
             self.display2.fill(WINDOW_COLOR)
             self.display1.fill(WINDOW_COLOR)
 
-            import Constants
             if (Constants.twoPlayerOpt == False):
                 high_score2 = f'{self.OnePlayerMenu.state} Score: {self.controller2.get_score()}'
             else:
@@ -333,7 +307,6 @@ class GameGUI:
                 color=WHITE
             )
 
-            import Constants
             if (Constants.twoPlayerOpt == False):
                 self.window.blit(self.display2, (350, 0))
             else:    
@@ -365,7 +338,6 @@ class GameGUI:
                     self.controller2.load_model()
                     self.load_model = False
 
-                import Constants
                 if (Constants.twoPlayerOpt == False):
                     self.controller2.ai_play(self.OnePlayerMenu.state)
                 else:

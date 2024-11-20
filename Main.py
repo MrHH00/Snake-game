@@ -1,4 +1,4 @@
-from GameGUI import GameGUI
+from app.GameGUI import GameGUI
 
 game = GameGUI()
 
