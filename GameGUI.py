@@ -271,16 +271,21 @@ class GameGUI:
             self.display2.fill(WINDOW_COLOR)
             self.display1.fill(WINDOW_COLOR)
 
-            high_score1 = f'{self.TwoPlayerMenu_P1.state} Score: {self.controller1.get_score()}'
-            high_score2 = f'{self.TwoPlayerMenu_P2.state} Score: {self.controller2.get_score()}'
+            import Constants
+            if (Constants.twoPlayerOpt == False):
+                high_score2 = f'{self.OnePlayerMenu.state} Score: {self.controller2.get_score()}'
+            else:
+                high_score1 = f'{self.TwoPlayerMenu_P1.state} Score: {self.controller1.get_score()}'
+                high_score2 = f'{self.TwoPlayerMenu_P2.state} Score: {self.controller2.get_score()}'
             
             to_continue = 'Enter to Continue'
 
-            self.draw_text_surface(
-                high_score1, size=30,
-                x=self.SIZE/2, y=self.SIZE/2,
-                display=self.display1, color=MENU_COLOR
-            )
+            if (Constants.twoPlayerOpt):
+                self.draw_text_surface(
+                    high_score1, size=30,
+                    x=self.SIZE/2, y=self.SIZE/2,
+                    display=self.display1, color=MENU_COLOR
+                )
             
             self.draw_text_surface(
                 high_score2, size=30,

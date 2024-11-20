@@ -96,7 +96,7 @@ class MainMenu(Menu):
             )
                         
             self.game.draw_text(
-                '22110028  -  Nguyen Nhat An', size=self.option_size,
+                '22110007  -  Nguyen Nhat An', size=self.option_size,
                 x=self.nhatanx,  y=self.nhatany,
                 color=SNAKE_COLOR
             )
@@ -173,8 +173,6 @@ class onePlayerMenu(Menu):
             self.cursorDFS = MENU_COLOR
         elif self.state == 'BFS':
             self.cursorBFS = MENU_COLOR
-        elif self.state == 'DFS':
-            self.cursorDFS = MENU_COLOR
         elif self.state == 'UCS':
             self.cursorUCS = MENU_COLOR
         elif self.state == 'GREEDY':
