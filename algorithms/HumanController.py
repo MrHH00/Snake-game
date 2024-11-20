@@ -1,6 +1,6 @@
 
 import pygame
-from Snake import Snake
+from app.Snake import Snake
 
 class HumanController:
     def __init__(self):

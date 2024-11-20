@@ -44,4 +44,7 @@ class UCS(Algorithm):
                        neighbor not in self.explored_set:
                         neighbor.parent = currentstate
                         heapq.heappush(self.frontier, (cost + 1, neighbor))
-        return None
+        
+        # If no path found, keep moving in the same direction
+        x, y = self.keep_moving(snake)
+        return Node(x, y)

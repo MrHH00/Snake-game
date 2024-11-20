@@ -1,5 +1,5 @@
 from app.Algorithm import Algorithm
-
+from app.Utility import Node
 
 class A_STAR(Algorithm):
     def __init__(self, grid):
@@ -61,4 +61,7 @@ class A_STAR(Algorithm):
                     neighbor.parent = lowest_node
                     neighbor.g = g
                     neighbor.f = neighbor.g + neighbor.h
-        return None
+        
+        # If no path found, keep moving in the same direction
+        x, y = self.keep_moving(snake)
+        return Node(x, y)

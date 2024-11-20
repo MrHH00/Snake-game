@@ -25,7 +25,9 @@ class DFS(Algorithm):
                 path = self.recursive_DFS(
                     snake, goalstate, neighbor)  # check neighbor
                 if path != None:
-                    return path  # found path
+                    # If no path found, keep moving in the same direction
+                    x, y = self.keep_moving(snake)
+                    return Node(x, y)
         return None
 
     def run_algorithm(self, snake):

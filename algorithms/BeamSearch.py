@@ -48,5 +48,6 @@ class BeamSearch(Algorithm):
                         neighbor.parent = currentstate
                         self.frontier.append(neighbor)
 
-        # If no path found, return None
-        return None
+        # If no path found, keep moving in the same direction
+        x, y = self.keep_moving(snake)
+        return Node(x, y)
