@@ -28,7 +28,10 @@ class GameGUI:
         self.SIZE = CELL_SIZE * NO_OF_CELLS
         self.display1 = pygame.Surface((self.SIZE, self.SIZE))
         self.display2 = pygame.Surface((self.SIZE, self.SIZE))
+        self.background = pygame.Surface((self.SIZE, self.SIZE))
+        self.background.fill(WINDOW_COLOR)
         self.window = pygame.display.set_mode((self.SIZE + 700, self.SIZE))
+        self.window.fill(WINDOW_COLOR)
 
         self.font_name = 'Gameplay.ttf'
 
@@ -62,6 +65,7 @@ class GameGUI:
             if self.controller2.algo != None:
                 self.draw_elements(self.controller2,self.display2)
             
+            self.window.blit(self.background, (350, 0))
             self.window.blit(self.display1, (0, 0))
             self.window.blit(self.display2, (700, 0))
 
@@ -98,8 +102,7 @@ class GameGUI:
                 for col in range(NO_OF_CELLS):
                     if col % 2 != 0:
                         grid_rect = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-                        pygame.draw.rect(display, grid_color, grid_rect)
-                        
+                        pygame.draw.rect(display, grid_color, grid_rect)                  
 
     def draw_game_stats(self, controller,display):
         if self.curr_menu.state != 'HUMAN':  # path Ai algo
@@ -149,7 +152,6 @@ class GameGUI:
 
                 pygame.draw.rect(display, BANNER_COLOR, path_rect, 1)
                 display.blit(shape_surf, path_rect)
-
 
     def draw_snake_head(self, snake,display):
         head = snake.body[0]
@@ -235,7 +237,6 @@ class GameGUI:
         # pygame.draw.rect(display, FRUIT_COLOR, fruit_rect)
         display.blit(self.banana, fruit_rect)
 
-
     def draw_banner(self,display):
         banner = pygame.Rect(0, 0, self.SIZE, BANNER_HEIGHT * CELL_SIZE)
         pygame.draw.rect(display, BANNER_COLOR, banner)
@@ -265,17 +266,35 @@ class GameGUI:
                         self.controller.save_model()
                         break
 
-            self.display2.fill(MENU_COLOR)
-            self.display1.fill(MENU_COLOR)
+            self.display2.fill(WINDOW_COLOR)
+            self.display1.fill(WINDOW_COLOR)
 
-            high_score = f'High Score: {self.controller1.get_score()}'
-
+            high_score1 = f'{self.TwoPlayerMenu_P1.state} Score: {self.controller1.get_score()}'
+            high_score2 = f'{self.TwoPlayerMenu_P2.state} Score: {self.controller2.get_score()}'
+            
             to_continue = 'Enter to Continue'
 
-            self.draw_text(
-                high_score, size=35,
+            self.draw_text_surface(
+                high_score1, size=30,
                 x=self.SIZE/2, y=self.SIZE/2,
+                display=self.display1, color=MENU_COLOR
             )
+            
+            self.draw_text_surface(
+                high_score2, size=30,
+                x=self.SIZE/2, y=self.SIZE/2,
+                display=self.display2, color=MENU_COLOR
+            )
+
+            # self.draw_text(
+            #     high_score1, size=35,
+            #     x=self.SIZE/2, y=self.SIZE/2,
+            # )
+            
+            # self.draw_text(
+            #     high_score2, size=35,
+            #     x=self.SIZE/2, y=self.SIZE/2,
+            # )
 
             self.draw_text(
                 to_continue, size=30,
@@ -286,7 +305,8 @@ class GameGUI:
             self.window.blit(self.display2, (700, 0))
             self.window.blit(self.display1, (0, 0))
             pygame.display.update()
-        self.controller.reset()
+        self.controller1.reset()
+        self.controller2.reset()
 
     def is_quit(self, event):
         # user presses exit icon

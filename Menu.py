@@ -21,7 +21,8 @@ class Menu:
         )
 
     def blit_menu(self):
-        self.game.window.blit(self.game.display2, (0, 0))
+        self.game.window.blit(self.game.display1, (350, 0))
+        # self.game.window.blit(self.game.display2, (700, 0))
         pygame.display.update()
         self.game.reset_keys()
 
@@ -63,7 +64,7 @@ class MainMenu(Menu):
             self.game.event_handler()
             self.check_input()
 
-            self.game.display2.fill(WINDOW_COLOR)
+            self.game.display1.fill(WINDOW_COLOR)
 
             self.game.draw_text(
                 'SNAKE EAT BANANA', size=self.title_size,
@@ -209,7 +210,7 @@ class onePlayerMenu(Menu):
             self.game.event_handler()
             self.check_input()
 
-            self.game.display2.fill(WINDOW_COLOR)
+            self.game.display1.fill(WINDOW_COLOR)
 
             self.game.draw_text(
                 'Ai Snake Game', size=self.title_size,
@@ -452,7 +453,7 @@ class twoPlayerMenu_P1(Menu):
             self.game.event_handler()
             self.check_input()
 
-            self.game.display2.fill(WINDOW_COLOR)
+            self.game.display1.fill(WINDOW_COLOR)
 
             self.game.draw_text(
                 'Ai Snake Game', size=self.title_size,
@@ -692,7 +693,7 @@ class twoPlayerMenu_P2(Menu):
             self.game.event_handler()
             self.check_input()
 
-            self.game.display2.fill(WINDOW_COLOR)
+            self.game.display1.fill(WINDOW_COLOR)
 
             self.game.draw_text(
                 'Ai Snake Game', size=self.title_size,
