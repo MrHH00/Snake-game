@@ -1,6 +1,5 @@
 from pygame.math import Vector2
 from Fruit import Fruit
-from NN import NeuralNework
 import pickle
 import pygame
 
@@ -16,7 +15,6 @@ class Snake:
         self.life_time = 0
         self.steps = 0
         self.hidden = hidden
-        self.network = NeuralNework(5, self.hidden, 3)
         
         self.head_up = pygame.image.load('images/head_up.png').convert_alpha()
         self.head_down = pygame.image.load('images/head_down.png').convert_alpha()
@@ -52,8 +50,6 @@ class Snake:
         self.score = 0
         self.fitness = 0
         self.steps = 0
-
-        self.network = NeuralNework(5, self.hidden, 3)
 
     def get_x(self):
         return self.body[0].x

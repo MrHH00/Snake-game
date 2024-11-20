@@ -38,7 +38,6 @@ class GameGUI:
         self.OnePlayerMenu = onePlayerMenu(self)
         self.TwoPlayerMenu_P1 = twoPlayerMenu_P1(self)
         self.TwoPlayerMenu_P2 = twoPlayerMenu_P2(self)
-        self.GA = GAMenu(self, self.controller1)
         self.curr_menu = self.main_menu
 
         self.load_model = False
@@ -76,20 +75,16 @@ class GameGUI:
         self.draw_banner(display)
         self.draw_game_stats(controller,display)
 
-        if self.curr_menu.state != 'GA' or controller.model_loaded:  # Path Ai or trained GA
-            fruit = controller.get_fruit_pos()
-            snake = controller.snake
+        fruit = controller.get_fruit_pos()
+        snake = controller.snake
 
-            
-            self.draw_fruit(fruit, display)
-            self.draw_snake(snake,display)
-            self.draw_score(controller,display)
+        
+        self.draw_fruit(fruit, display)
+        self.draw_snake(snake,display)
+        self.draw_score(controller,display)
 
-            if not controller.model_loaded:
-                self.draw_path(controller,display)  # only path Ai has a path
-
-        else:  # training a GA model
-            self.draw_all_snakes_GA()
+        if not controller.model_loaded:
+            self.draw_path(controller,display)  # only path Ai has a path
 
     def draw_grid(self,display):
         grid_color = (209,74,54)
@@ -107,10 +102,10 @@ class GameGUI:
                         
 
     def draw_game_stats(self, controller,display):
-        if self.curr_menu.state != 'GA':  # path Ai algo
+        if self.curr_menu.state != 'HUMAN':  # path Ai algo
             instruction = 'Space to view Ai path, W to speed up, Q to go back'
 
-        elif controller.model_loaded:  # trained model
+        else:  # human
             instruction = 'W to speed up, Q to go back'
             
         # instruction
@@ -140,18 +135,6 @@ class GameGUI:
                 x=self.SIZE/2, y=CELL_SIZE,
                 display=display, color=WINDOW_COLOR
             )
-
-
-
-
-    def draw_all_snakes_GA(self):
-        if not self.view_path:  # have all snakes visible by default
-
-            for snake in self.controller.snakes:  # for each snake in list
-                self.draw_snake(snake)
-
-                # fruit of each snake
-                self.draw_fruit(snake.get_fruit())
 
     def draw_path(self,controller,display):
         if controller.algo != None and self.view_path:
@@ -285,22 +268,7 @@ class GameGUI:
             self.display2.fill(MENU_COLOR)
             self.display1.fill(MENU_COLOR)
 
-            # training model results
-            if self.curr_menu.state == 'GA' and self.controller.model_loaded == False:
-                best_score = self.controller.best_GA_score()
-                best_gen = self.controller.best_GA_gen()
-
-                high_score = f'Best snake Score: {best_score} in generation {best_gen}'
-                save = 'Press S to save best snake'
-
-                self.draw_text(
-                    save, size=30,
-                    x=self.SIZE/2, y=self.SIZE/2 + 3*CELL_SIZE,
-                    color=FRUIT_COLOR
-                )
-            else:
-                # Path ai or trained model results
-                high_score = f'High Score: {self.controller1.get_score()}'
+            high_score = f'High Score: {self.controller1.get_score()}'
 
             to_continue = 'Enter to Continue'
 

@@ -36,15 +36,6 @@ class GameController:
         self.snakes = []
         self.model_loaded = False
 
-    def best_GA_score(self):
-        return self.algo.best_score
-
-    def best_GA_gen(self):
-        return self.algo.best_gen
-
-    def curr_gen(self):
-        return self.algo.generation
-
     def save_model(self):
         best_snake = self.algo.best_snake
         network = best_snake.network
@@ -72,23 +63,6 @@ class GameController:
             position = self.snake.get_fruit()
             inside_body = False
             for body in self.snake.body:
-                if position == body:
-                    inside_body = True
-
-            if inside_body == False:
-                break
-
-    def ate_fruit_GA(self, snake):
-        if snake.ate_fruit():
-            snake.add_body_ai()
-            self.change_fruit_location_GA(snake)
-
-    def change_fruit_location_GA(self, snake):
-        while True:
-            snake.create_fruit()
-            position = snake.get_fruit()
-            inside_body = False
-            for body in snake.body:
                 if position == body:
                     inside_body = True
 
@@ -192,26 +166,6 @@ class GameController:
                 # keep going left
                 x = x - 1
         return x, y
-
-    def update_GA_ai(self):
-        if not self.snake and not self.model_loaded:
-            if self.algo.done():
-                if self.algo.next_generation():
-                    self.snakes = self.algo.population.snakes
-                else:
-                    self.end = True
-
-            for snake in self.snakes:
-                x, y = self.algo.run_algorithm(snake)
-
-                snake.move_ai(x, y)
-                self.algo.died(snake)
-                self.ate_fruit_GA(snake)
-        else:
-            x, y = self.algo.run_algorithm(self.snake)
-            self.snake.move_ai(x, y)
-            self.died()
-            self.ate_fruit()
 
     def update_path_finding_algo(self, pos):
         if pos == None:
