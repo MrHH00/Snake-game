@@ -1,7 +1,7 @@
 from Utility import Node
 from Algorithm import Algorithm
 
-class BestFirstSearch(Algorithm):
+class GREEDY(Algorithm):
     def __init__(self, grid):
         super().__init__(grid)
 

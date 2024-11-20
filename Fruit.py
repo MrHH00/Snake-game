@@ -1,9 +1,10 @@
 from pygame.math import Vector2
 from Constants import BANNER_HEIGHT, NO_OF_CELLS, USER_SEED
 import random
+import time
 
-random.seed(USER_SEED)
 
+random.seed(time.time())
 
 class Fruit:
     def __init__(self):
@@ -18,5 +19,5 @@ class Fruit:
         self.position = Vector2(x, y)
 
     def reset_seed(self):
-        random.seed(USER_SEED)
+        random.seed(time.time())
         self.generate_fruit()

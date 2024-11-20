@@ -1,9 +1,11 @@
+
 from Utility import Node
 from Algorithm import Algorithm
 
-class BestFirstSearch(Algorithm):
-    def __init__(self, grid):
+class BeamSearch(Algorithm):
+    def __init__(self, grid, beam_width=2):
         super().__init__(grid)
+        self.beam_width = beam_width
 
     def run_algorithm(self, snake):
         # Use existing path if available
@@ -28,6 +30,7 @@ class BestFirstSearch(Algorithm):
         while len(self.frontier) > 0:
             # Sort frontier by heuristic distance to goal
             self.frontier.sort(key=lambda x: self.manhattan_distance(x, goalstate))
+            self.frontier = self.frontier[:self.beam_width]  # Keep only the best beam_width states
             currentstate = self.frontier.pop(0)
 
             if currentstate.equal(goalstate):

@@ -3,10 +3,16 @@ from Constants import NO_OF_CELLS, BANNER_HEIGHT
 from Utility import Grid
 from DFS import DFS
 from BFS import BFS
+from UCS import UCS
+from GREEDY import GREEDY
 from A_STAR import A_STAR
-from GA import *
+from HILL_CLIMBING import HILL_CLIMBING
+from BEAM import BEAM
 from HUMAN import HUMAN
 from BestFirstSearch import BestFirstSearch
+from UCS import UCS
+from HillClimbing import HillClimbing
+from BeamSearch import BeamSearch
 
 
 class GameController:
@@ -115,23 +121,44 @@ class GameController:
             self.algo = DFS(self.grid)
             self.snake = Snake()
 
+        elif algo_type == 'GREEDY':
+            self.algo = GREEDY(self.grid)
+            self.snake = Snake()
+
         elif algo_type == 'ASTAR':
             self.algo = A_STAR(self.grid)
             self.snake = Snake()
-
-        elif algo_type == 'GA':
-            self.algo = GA(self.grid)
             
-            if not self.model_loaded:
-                self.algo.population._initialpopulation_()
-                self.snakes = self.algo.population.snakes
-        
+        elif algo_type == 'UCS':
+            self.algo = UCS(self.grid)
+            self.snake = Snake()
+            
+        elif algo_type == 'HILL_CLIMBING':
+            self.algo = HILL_CLIMBING(self.grid)
+            self.snake = Snake()
+            
+        elif algo_type == 'BEAM':
+            self.algo = BEAM(self.grid)
+            self.snake = Snake()
+            
         elif algo_type == 'HUMAN':
             self.algo = HUMAN(self.grid)
             self.snake = Snake()
 
-        elif algo_type == 'BESTFIRST':
+        elif algo_type == 'Best First Search':
             self.algo = BestFirstSearch(self.grid)
+            self.snake = Snake()
+
+        elif algo_type == 'UCS':
+            self.algo = UCS(self.grid)
+            self.snake = Snake()
+
+        elif algo_type == 'Hill Climbing':
+            self.algo = HillClimbing(self.grid)
+            self.snake = Snake()
+
+        elif algo_type == 'Beam Search':
+            self.algo = BeamSearch(self.grid)
             self.snake = Snake()
 
     def ai_play(self, algorithm):
@@ -140,9 +167,7 @@ class GameController:
         if self.algo == None:
             return
 
-        if isinstance(self.algo, GA):
-            self.update_GA_ai()
-        elif isinstance(self.algo, HUMAN):
+        if isinstance(self.algo, HUMAN):
             self.update_human()
         else:
             pos = self.algo.run_algorithm(self.snake)

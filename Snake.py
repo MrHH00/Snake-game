@@ -2,6 +2,7 @@ from pygame.math import Vector2
 from Fruit import Fruit
 from NN import NeuralNework
 import pickle
+import pygame
 
 
 class Snake:
@@ -16,6 +17,25 @@ class Snake:
         self.steps = 0
         self.hidden = hidden
         self.network = NeuralNework(5, self.hidden, 3)
+        
+        self.head_up = pygame.image.load('images/head_up.png').convert_alpha()
+        self.head_down = pygame.image.load('images/head_down.png').convert_alpha()
+        self.head_right = pygame.image.load('images/head_right.png').convert_alpha()
+        self.head_left = pygame.image.load('images/head_left.png').convert_alpha()
+		
+        self.tail_up = pygame.image.load('images/tail_up.png').convert_alpha()
+        self.tail_down = pygame.image.load('images/tail_down.png').convert_alpha()
+        self.tail_right = pygame.image.load('images/tail_right.png').convert_alpha()
+        self.tail_left = pygame.image.load('images/tail_left.png').convert_alpha()
+        
+        self.body_vertical = pygame.image.load('images/body_vertical.png').convert_alpha()
+        self.body_horizontal = pygame.image.load('images/body_horizontal.png').convert_alpha()
+        
+        self.body_tr = pygame.image.load('images/body_tr.png').convert_alpha()
+        self.body_tl = pygame.image.load('images/body_tl.png').convert_alpha()
+        self.body_br = pygame.image.load('images/body_br.png').convert_alpha()
+        self.body_bl = pygame.image.load('images/body_bl.png').convert_alpha()
+
 
     def save_model(self, network, name):
         with open(name, "wb") as file:

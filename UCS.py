@@ -1,7 +1,8 @@
 from Utility import Node
 from Algorithm import Algorithm
+import heapq
 
-class BestFirstSearch(Algorithm):
+class UCS(Algorithm):
     def __init__(self, grid):
         super().__init__(grid)
 
@@ -22,13 +23,12 @@ class BestFirstSearch(Algorithm):
         # Get initial and goal states
         initialstate, goalstate = self.get_initstate_and_goalstate(snake)
         
-        # Add initial state to frontier
-        self.frontier.append(initialstate)
+        # Add initial state to frontier with cost 0
+        heapq.heappush(self.frontier, (0, initialstate))
 
         while len(self.frontier) > 0:
-            # Sort frontier by heuristic distance to goal
-            self.frontier.sort(key=lambda x: self.manhattan_distance(x, goalstate))
-            currentstate = self.frontier.pop(0)
+            # Pop the state with the lowest cost
+            cost, currentstate = heapq.heappop(self.frontier)
 
             if currentstate.equal(goalstate):
                 return self.get_path(currentstate)
@@ -43,7 +43,5 @@ class BestFirstSearch(Algorithm):
                        not self.outside_boundary(neighbor) and \
                        neighbor not in self.explored_set:
                         neighbor.parent = currentstate
-                        self.frontier.append(neighbor)
-
-        # If no path found, return None
+                        heapq.heappush(self.frontier, (cost + 1, neighbor))
         return None
