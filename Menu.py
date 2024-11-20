@@ -389,36 +389,59 @@ class twoPlayerMenu_P1(Menu):
 
         self.cursorBFS = MENU_COLOR
         self.cursorDFS = WHITE
+        self.cursorUCS = WHITE
+        self.cursorGREEDY = WHITE
         self.cursorASTAR = WHITE
+        self.cursorHILLCLIMBING = WHITE
+        self.cursorBEAM = WHITE
         self.cursorHuman = WHITE
         self.cursorQuit = WHITE
 
-        self.titlex, self.titley = self.mid_size, self.mid_size - 50
-        self.BFSx, self.BFSy = self.mid_size, self.mid_size + 0
-        self.DFSx, self.DFSy = self.mid_size, self.mid_size + 50
-        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 100
-        self.Humanx, self.Humany = self.mid_size, self.mid_size + 150
-        self.Quitx, self.Quity = self.mid_size, self.mid_size + 200
+        self.titlex, self.titley = self.mid_size, self.mid_size - 200
+        self.BFSx, self.BFSy = self.mid_size, self.mid_size - 150
+        self.DFSx, self.DFSy = self.mid_size, self.mid_size - 100
+        self.UCSx, self.UCSy = self.mid_size, self.mid_size - 50
+        self.GREEDYx, self.GREEDYy = self.mid_size, self.mid_size + 0
+        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 50
+        self.HILLCLIMBINGx, self.HILLCLIMBINGy = self.mid_size, self.mid_size + 100
+        self.BEAMx, self.BEAMy = self.mid_size, self.mid_size + 150
+        self.Humanx, self.Humany = self.mid_size, self.mid_size + 200
+        self.Quitx, self.Quity = self.mid_size, self.mid_size + 250
 
         self.cursor_rect.midtop = (self.BFSx + self.offset, self.BFSy)
 
     def change_cursor_color(self):
         self.clear_cursor_color()
-        if self.state == 'BFS':
+        if self.state == 'DFS':
+            self.cursorDFS = MENU_COLOR
+        elif self.state == 'BFS':
             self.cursorBFS = MENU_COLOR
         elif self.state == 'DFS':
             self.cursorDFS = MENU_COLOR
+        elif self.state == 'UCS':
+            self.cursorUCS = MENU_COLOR
+        elif self.state == 'GREEDY':
+            self.cursorGREEDY = MENU_COLOR
         elif self.state == 'ASTAR':
             self.cursorASTAR = MENU_COLOR
+        elif self.state == 'HILLCLIMBING':
+            self.cursorHILLCLIMBING = MENU_COLOR
+        elif self.state == 'BEAM':
+            self.cursorBEAM = MENU_COLOR
         elif self.state == 'HUMAN':
             self.cursorHuman = MENU_COLOR
         elif self.state == 'QUIT':
             self.cursorQuit = MENU_COLOR
 
     def clear_cursor_color(self):
+        self.cursorDFS = WHITE
         self.cursorBFS = WHITE
         self.cursorDFS = WHITE
+        self.cursorUCS = WHITE
+        self.cursorGREEDY = WHITE
         self.cursorASTAR = WHITE
+        self.cursorHILLCLIMBING = WHITE
+        self.cursorBEAM = WHITE
         self.cursorHuman = WHITE
         self.cursorQuit = WHITE
 
@@ -433,7 +456,7 @@ class twoPlayerMenu_P1(Menu):
 
             self.game.draw_text(
                 'Ai Snake Game', size=self.title_size,
-                x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS),
+                x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS) - 150,
                 color=TITLE_COLOR
             )
             
@@ -444,20 +467,45 @@ class twoPlayerMenu_P1(Menu):
             )
 
             self.game.draw_text(
+                'DFS', size=self.option_size,
+                x=self.DFSx,  y=self.DFSy,
+                color=self.cursorDFS
+            )
+            
+            self.game.draw_text(
                 'BFS', size=self.option_size,
                 x=self.BFSx,  y=self.BFSy,
                 color=self.cursorBFS
             )
+            
             self.game.draw_text(
-                'DFS', size=self.option_size,
-                x=self.DFSx,  y=self.DFSy,
-                color=self.cursorDFS
+                'UCS', size=self.option_size,
+                x=self.UCSx,  y=self.UCSy,
+                color=self.cursorUCS
+            )
+            
+            self.game.draw_text(
+                'GREEDY', size=self.option_size,
+                x=self.GREEDYx,  y=self.GREEDYy,
+                color=self.cursorGREEDY
             )
 
             self.game.draw_text(
                 'AStar', size=self.option_size,
                 x=self.ASTARx,  y=self.ASTARy,
                 color=self.cursorASTAR
+            )
+            
+            self.game.draw_text(
+                'Hill Climbing', size=self.option_size,
+                x=self.HILLCLIMBINGx,  y=self.HILLCLIMBINGy,
+                color=self.cursorHILLCLIMBING
+            )
+            
+            self.game.draw_text(
+                'Beam Search', size=self.option_size,
+                x=self.BEAMx,  y=self.BEAMy,
+                color=self.cursorBEAM
             )
             
             self.game.draw_text(
@@ -495,10 +543,30 @@ class twoPlayerMenu_P1(Menu):
 
             elif self.state == 'DFS':
                 self.cursor_rect.midtop = (
+                    self.UCSx + self.offset, self.UCSy)
+                self.state = 'UCS'
+                
+            elif self.state == 'UCS':
+                self.cursor_rect.midtop = (
+                    self.GREEDYx + self.offset, self.GREEDYy)
+                self.state = 'GREEDY'
+                
+            elif self.state == 'GREEDY':
+                self.cursor_rect.midtop = (
                     self.ASTARx + self.offset, self.ASTARy)
                 self.state = 'ASTAR'
 
             elif self.state == 'ASTAR':
+                self.cursor_rect.midtop = (
+                    self.HILLCLIMBINGx + self.offset, self.HILLCLIMBINGy)
+                self.state = 'HILLCLIMBING'
+                
+            elif self.state == 'HILLCLIMBING':
+                self.cursor_rect.midtop = (
+                    self.BEAMx + self.offset, self.BEAMy)
+                self.state = 'BEAM'
+
+            elif self.state == 'BEAM':
                 self.cursor_rect.midtop = (
                     self.Humanx + self.offset, self.Humany)
                 self.state = 'HUMAN'
@@ -507,19 +575,14 @@ class twoPlayerMenu_P1(Menu):
                 self.cursor_rect.midtop = (
                     self.Quitx + self.offset, self.Quity)
                 self.state = 'QUIT'
-            
+                
             elif self.state == 'QUIT':
                 self.cursor_rect.midtop = (
                     self.BFSx + self.offset, self.BFSy)
                 self.state = 'BFS'
 
         if self.game.UPKEY:
-            if self.state == 'HUMAN':
-                self.cursor_rect.midtop = (
-                    self.ASTARx + self.offset, self.ASTARy)
-                self.state = 'ASTAR'
-            
-            elif self.state == 'BFS':
+            if self.state == 'BFS':
                 self.cursor_rect.midtop = (
                     self.Quitx + self.offset, self.Quity)
                 self.state = 'QUIT'
@@ -528,22 +591,41 @@ class twoPlayerMenu_P1(Menu):
                 self.cursor_rect.midtop = (
                     self.BFSx + self.offset, self.BFSy)
                 self.state = 'BFS'
+                
+            elif self.state == 'UCS':
+                self.cursor_rect.midtop = (
+                    self.DFSx + self.offset, self.DFSy)
+                self.state = 'DFS'
 
-            elif self.state == 'Best First Search':
+            elif self.state == 'GREEDY':
                 self.cursor_rect.midtop = (
                     self.UCSx + self.offset, self.UCSy)
                 self.state = 'UCS'
 
             elif self.state == 'ASTAR':
                 self.cursor_rect.midtop = (
-                    self.DFSx + self.offset, self.DFSy)
-                self.state = 'DFS'
+                    self.GREEDYx + self.offset, self.GREEDYy)
+                self.state = 'GREEDY'
+
+            elif self.state == 'HILLCLIMBING':
+                self.cursor_rect.midtop = (
+                    self.ASTARx + self.offset, self.ASTARy)
+                self.state = 'ASTAR'
+
+            elif self.state == 'BEAM':
+                self.cursor_rect.midtop = (
+                    self.HILLCLIMBINGx + self.offset, self.HILLCLIMBINGy)
+                self.state = 'HILLCLIMBING'
+
+            elif self.state == 'HUMAN':
+                self.cursor_rect.midtop = (
+                    self.BEAMx + self.offset, self.BEAMy)
+                self.state = 'BEAM'
             
             elif self.state == 'QUIT':
                 self.cursor_rect.midtop = (
                     self.Humanx + self.offset, self.Humany)
                 self.state = 'HUMAN'
-
 
 class twoPlayerMenu_P2(Menu):
     def __init__(self, game):
@@ -552,37 +634,55 @@ class twoPlayerMenu_P2(Menu):
 
         self.cursorBFS = MENU_COLOR
         self.cursorDFS = WHITE
+        self.cursorUCS = WHITE
+        self.cursorGREEDY = WHITE
         self.cursorASTAR = WHITE
-        self.cursorHuman = WHITE
+        self.cursorHILLCLIMBING = WHITE
+        self.cursorBEAM = WHITE
         self.cursorQuit = WHITE
 
-        self.titlex, self.titley = self.mid_size, self.mid_size - 50
-        self.BFSx, self.BFSy = self.mid_size, self.mid_size + 0
-        self.DFSx, self.DFSy = self.mid_size, self.mid_size + 50
-        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 100
-        self.Humanx, self.Humany = self.mid_size, self.mid_size + 150
+        self.titlex, self.titley = self.mid_size, self.mid_size - 200
+        self.BFSx, self.BFSy = self.mid_size, self.mid_size - 150
+        self.DFSx, self.DFSy = self.mid_size, self.mid_size - 100
+        self.UCSx, self.UCSy = self.mid_size, self.mid_size - 50
+        self.GREEDYx, self.GREEDYy = self.mid_size, self.mid_size + 0
+        self.ASTARx, self.ASTARy = self.mid_size, self.mid_size + 50
+        self.HILLCLIMBINGx, self.HILLCLIMBINGy = self.mid_size, self.mid_size + 100
+        self.BEAMx, self.BEAMy = self.mid_size, self.mid_size + 150
         self.Quitx, self.Quity = self.mid_size, self.mid_size + 200
 
         self.cursor_rect.midtop = (self.BFSx + self.offset, self.BFSy)
 
     def change_cursor_color(self):
         self.clear_cursor_color()
-        if self.state == 'BFS':
+        if self.state == 'DFS':
+            self.cursorDFS = MENU_COLOR
+        elif self.state == 'BFS':
             self.cursorBFS = MENU_COLOR
         elif self.state == 'DFS':
             self.cursorDFS = MENU_COLOR
+        elif self.state == 'UCS':
+            self.cursorUCS = MENU_COLOR
+        elif self.state == 'GREEDY':
+            self.cursorGREEDY = MENU_COLOR
         elif self.state == 'ASTAR':
             self.cursorASTAR = MENU_COLOR
-        elif self.state == 'HUMAN':
-            self.cursorHuman = MENU_COLOR
+        elif self.state == 'HILLCLIMBING':
+            self.cursorHILLCLIMBING = MENU_COLOR
+        elif self.state == 'BEAM':
+            self.cursorBEAM = MENU_COLOR
         elif self.state == 'QUIT':
             self.cursorQuit = MENU_COLOR
 
     def clear_cursor_color(self):
+        self.cursorDFS = WHITE
         self.cursorBFS = WHITE
         self.cursorDFS = WHITE
+        self.cursorUCS = WHITE
+        self.cursorGREEDY = WHITE
         self.cursorASTAR = WHITE
-        self.cursorHuman = WHITE
+        self.cursorHILLCLIMBING = WHITE
+        self.cursorBEAM = WHITE
         self.cursorQuit = WHITE
 
     def display_menu(self):
@@ -596,7 +696,7 @@ class twoPlayerMenu_P2(Menu):
 
             self.game.draw_text(
                 'Ai Snake Game', size=self.title_size,
-                x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS),
+                x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS) - 150,
                 color=TITLE_COLOR
             )
             
@@ -607,14 +707,27 @@ class twoPlayerMenu_P2(Menu):
             )
 
             self.game.draw_text(
+                'DFS', size=self.option_size,
+                x=self.DFSx,  y=self.DFSy,
+                color=self.cursorDFS
+            )
+            
+            self.game.draw_text(
                 'BFS', size=self.option_size,
                 x=self.BFSx,  y=self.BFSy,
                 color=self.cursorBFS
             )
+            
             self.game.draw_text(
-                'DFS', size=self.option_size,
-                x=self.DFSx,  y=self.DFSy,
-                color=self.cursorDFS
+                'UCS', size=self.option_size,
+                x=self.UCSx,  y=self.UCSy,
+                color=self.cursorUCS
+            )
+            
+            self.game.draw_text(
+                'GREEDY', size=self.option_size,
+                x=self.GREEDYx,  y=self.GREEDYy,
+                color=self.cursorGREEDY
             )
 
             self.game.draw_text(
@@ -624,9 +737,15 @@ class twoPlayerMenu_P2(Menu):
             )
             
             self.game.draw_text(
-                'Human', size=self.option_size,
-                x=self.Humanx,  y=self.Humany,
-                color=self.cursorHuman
+                'Hill Climbing', size=self.option_size,
+                x=self.HILLCLIMBINGx,  y=self.HILLCLIMBINGy,
+                color=self.cursorHILLCLIMBING
+            )
+            
+            self.game.draw_text(
+                'Beam Search', size=self.option_size,
+                x=self.BEAMx,  y=self.BEAMy,
+                color=self.cursorBEAM
             )
             
             self.game.draw_text(
@@ -643,9 +762,7 @@ class twoPlayerMenu_P2(Menu):
         self.move_cursor()
 
         if self.game.START:
-            if self.state == 'GA':  # go to genetic algorith options
-                self.game.curr_menu = self.game.GA
-            elif self.state == 'QUIT':
+            if self.state == 'QUIT':
                 self.game.curr_menu = self.game.TwoPlayerMenu_P1
             else:
                 self.game.playing = True
@@ -660,49 +777,79 @@ class twoPlayerMenu_P2(Menu):
 
             elif self.state == 'DFS':
                 self.cursor_rect.midtop = (
+                    self.UCSx + self.offset, self.UCSy)
+                self.state = 'UCS'
+                
+            elif self.state == 'UCS':
+                self.cursor_rect.midtop = (
+                    self.GREEDYx + self.offset, self.GREEDYy)
+                self.state = 'GREEDY'
+                
+            elif self.state == 'GREEDY':
+                self.cursor_rect.midtop = (
                     self.ASTARx + self.offset, self.ASTARy)
                 self.state = 'ASTAR'
 
             elif self.state == 'ASTAR':
                 self.cursor_rect.midtop = (
-                    self.Humanx + self.offset, self.Humany)
-                self.state = 'HUMAN'
+                    self.HILLCLIMBINGx + self.offset, self.HILLCLIMBINGy)
+                self.state = 'HILLCLIMBING'
                 
-            elif self.state == 'HUMAN':
+            elif self.state == 'HILLCLIMBING':
+                self.cursor_rect.midtop = (
+                    self.BEAMx + self.offset, self.BEAMy)
+                self.state = 'BEAM'
+                
+            elif self.state == 'BEAM':
                 self.cursor_rect.midtop = (
                     self.Quitx + self.offset, self.Quity)
                 self.state = 'QUIT'
-            
+                
             elif self.state == 'QUIT':
                 self.cursor_rect.midtop = (
                     self.BFSx + self.offset, self.BFSy)
                 self.state = 'BFS'
 
         if self.game.UPKEY:
-            if self.state == 'HUMAN':
-                self.cursor_rect.midtop = (
-                    self.ASTARx + self.offset, self.ASTARy)
-                self.state = 'ASTAR'
-            
-            elif self.state == 'GA':
+            if self.state == 'BFS':
                 self.cursor_rect.midtop = (
                     self.Quitx + self.offset, self.Quity)
                 self.state = 'QUIT'
 
-            elif self.state == 'BESTFIRST':
+            elif self.state == 'DFS':
+                self.cursor_rect.midtop = (
+                    self.BFSx + self.offset, self.BFSy)
+                self.state = 'BFS'
+                
+            elif self.state == 'UCS':
+                self.cursor_rect.midtop = (
+                    self.DFSx + self.offset, self.DFSy)
+                self.state = 'DFS'
+
+            elif self.state == 'GREEDY':
+                self.cursor_rect.midtop = (
+                    self.UCSx + self.offset, self.UCSy)
+                self.state = 'UCS'
+
+            elif self.state == 'ASTAR':
+                self.cursor_rect.midtop = (
+                    self.GREEDYx + self.offset, self.GREEDYy)
+                self.state = 'GREEDY'
+
+            elif self.state == 'HILLCLIMBING':
                 self.cursor_rect.midtop = (
                     self.ASTARx + self.offset, self.ASTARy)
                 self.state = 'ASTAR'
 
-            elif self.state == 'ASTAR':
+            elif self.state == 'BEAM':
                 self.cursor_rect.midtop = (
-                    self.DFSx + self.offset, self.DFSy)
-                self.state = 'DFS'
-            
+                    self.HILLCLIMBINGx + self.offset, self.HILLCLIMBINGy)
+                self.state = 'HILLCLIMBING'
+
             elif self.state == 'QUIT':
                 self.cursor_rect.midtop = (
-                    self.Humanx + self.offset, self.Humany)
-                self.state = 'HUMAN'
+                    self.BEAMx + self.offset, self.BEAMy)
+                self.state = 'BEAM'
 
 
 
