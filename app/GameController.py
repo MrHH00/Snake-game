@@ -55,6 +55,7 @@ class GameController:
         if self.snake.ate_fruit():
             self.snake.add_body_ai()
             self.change_fruit_location()
+            self.snake.play_sound()
 
     def change_fruit_location(self):
         while True:

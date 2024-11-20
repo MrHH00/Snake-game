@@ -13,7 +13,11 @@ class Menu:
         self.offset = -150
         self.title_size = 45
         self.option_size = 20
+        self.press_sound = pygame.mixer.Sound('sounds/button.mp3')
 
+    def play_sound(self,sound):
+        pygame.mixer.Sound.play(sound)
+    
     def draw_cursor(self):
         self.game.draw_text(
             '&', size=20,
@@ -120,6 +124,7 @@ class MainMenu(Menu):
     def check_input(self):
         self.move_cursor()
         if self.game.START:
+            self.play_sound(self.press_sound)
             if self.state == '1 Player':
                 Constants.twoPlayerOpt = False
                 self.game.curr_menu = self.game.OnePlayerMenu
@@ -309,6 +314,7 @@ class onePlayerMenu(Menu):
         self.move_cursor()
 
         if self.game.START:
+            self.play_sound(self.press_sound)
             if self.state == 'QUIT':
                 self.game.curr_menu = self.game.main_menu
             else:
@@ -554,6 +560,7 @@ class twoPlayerMenu_P1(Menu):
         self.move_cursor()
 
         if self.game.START:
+            self.play_sound(self.press_sound)
             if self.state == 'QUIT':
                 self.game.curr_menu = self.game.main_menu
             else:
@@ -788,6 +795,7 @@ class twoPlayerMenu_P2(Menu):
         self.move_cursor()
 
         if self.game.START:
+            self.play_sound(self.press_sound)
             if self.state == 'QUIT':
                 self.game.curr_menu = self.game.TwoPlayerMenu_P1
             else:

@@ -33,6 +33,7 @@ class Snake:
         self.body_tl = pygame.image.load('images/body_tl.png').convert_alpha()
         self.body_br = pygame.image.load('images/body_br.png').convert_alpha()
         self.body_bl = pygame.image.load('images/body_bl.png').convert_alpha()
+        self.eat_sound = pygame.mixer.Sound('sounds/carrotnom.mp3')
 
 
     def save_model(self, network, name):
@@ -101,3 +102,6 @@ class Snake:
             if self.body[0] == body:
                 return True
         return False
+
+    def play_sound(self):
+        self.eat_sound.play()
