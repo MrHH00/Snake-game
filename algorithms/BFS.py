@@ -50,4 +50,7 @@ class BFS(Algorithm):
                     if neighbor.equal(goalstate):
                         # return path
                         return self.get_path(neighbor)
-        return None
+        
+        # If no path found, keep moving in the same direction
+        x, y = self.keep_moving(snake)
+        return Node(x, y)

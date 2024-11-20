@@ -71,3 +71,34 @@ class Algorithm(ABC):
             neighbors.append(self.grid[i][j+1])
 
         return neighbors
+
+    def keep_moving(self, snake):
+        x = snake.body[0].x
+        y = snake.body[0].y
+
+        directions = [
+            (x + 1, y),  # right
+            (x - 1, y),  # left
+            (x, y + 1),  # down
+            (x, y - 1)   # up
+        ]
+
+        # Filter out invalid moves
+        valid_moves = [
+            (new_x, new_y) for new_x, new_y in directions
+            if 0 <= new_x < NO_OF_CELLS and BANNER_HEIGHT <= new_y < NO_OF_CELLS and not any(body.x == new_x and body.y == new_y for body in snake.body)
+        ]
+
+        if valid_moves:
+            # Choose the move that maximizes the distance from the snake's body
+            max_distance = -1
+            best_move = (x, y)
+            for new_x, new_y in valid_moves:
+                distance = min(abs(new_x - body.x) + abs(new_y - body.y) for body in snake.body)
+                if distance > max_distance:
+                    max_distance = distance
+                    best_move = (new_x, new_y)
+            return best_move
+        else:
+            # If no valid moves, stay in place
+            return x, y
