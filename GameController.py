@@ -11,7 +11,6 @@ from BEAM import BEAM
 from HUMAN import HUMAN
 from BestFirstSearch import BestFirstSearch
 from UCS import UCS
-from HillClimbing import HillClimbing
 from BeamSearch import BeamSearch
 
 
@@ -107,7 +106,7 @@ class GameController:
             self.algo = UCS(self.grid)
             self.snake = Snake()
             
-        elif algo_type == 'HILL_CLIMBING':
+        elif algo_type == 'HILLCLIMBING':
             self.algo = HILL_CLIMBING(self.grid)
             self.snake = Snake()
             
@@ -128,7 +127,7 @@ class GameController:
             self.snake = Snake()
 
         elif algo_type == 'Hill Climbing':
-            self.algo = HillClimbing(self.grid)
+            self.algo = HILL_CLIMBING(self.grid)
             self.snake = Snake()
 
         elif algo_type == 'Beam Search':
