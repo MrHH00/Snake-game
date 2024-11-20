@@ -8,6 +8,14 @@ class BFS(Algorithm):
         super().__init__(grid)
 
     def run_algorithm(self, snake):
+        # Use existing path if available
+        if len(self.path) != 0:
+            path = self.path.pop()
+            if self.inside_body(snake, path):
+                self.path = []
+            else:
+                return path
+        
         # start clean
         self.frontier = deque([])
         self.explored_set = []
@@ -30,7 +38,6 @@ class BFS(Algorithm):
             for neighbor in neighbors:
                 # check if path inside snake, outside boundary or already visited
                 if self.inside_body(snake, neighbor) or self.outside_boundary(neighbor):
-                    self.explored_set.append(neighbor)
                     continue  # skip this path
 
                 if neighbor not in self.frontier and neighbor not in self.explored_set:

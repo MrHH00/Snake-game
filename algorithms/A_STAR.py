@@ -6,6 +6,14 @@ class A_STAR(Algorithm):
         super().__init__(grid)
 
     def run_algorithm(self, snake):
+        # Use existing path if available
+        if len(self.path) != 0:
+            path = self.path.pop()
+            if self.inside_body(snake, path):
+                self.path = []
+            else:
+                return path
+        
         # clear everything
         self.frontier = []
         self.explored_set = []
