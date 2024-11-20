@@ -1,8 +1,7 @@
-from Utility import Node
-from Algorithm import Algorithm
-import heapq
+from app.Utility import Node
+from app.Algorithm import Algorithm
 
-class UCS(Algorithm):
+class HILL_CLIMBING(Algorithm):
     def __init__(self, grid):
         super().__init__(grid)
 
@@ -23,12 +22,13 @@ class UCS(Algorithm):
         # Get initial and goal states
         initialstate, goalstate = self.get_initstate_and_goalstate(snake)
         
-        # Add initial state to frontier with cost 0
-        heapq.heappush(self.frontier, (0, initialstate))
+        # Add initial state to frontier
+        self.frontier.append(initialstate)
 
         while len(self.frontier) > 0:
-            # Pop the state with the lowest cost
-            cost, currentstate = heapq.heappop(self.frontier)
+            # Sort frontier by heuristic distance to goal
+            self.frontier.sort(key=lambda x: self.manhattan_distance(x, goalstate))
+            currentstate = self.frontier.pop(0)
 
             if currentstate.equal(goalstate):
                 return self.get_path(currentstate)
@@ -43,5 +43,7 @@ class UCS(Algorithm):
                        not self.outside_boundary(neighbor) and \
                        neighbor not in self.explored_set:
                         neighbor.parent = currentstate
-                        heapq.heappush(self.frontier, (cost + 1, neighbor))
+                        self.frontier.append(neighbor)
+
+        # If no path found, return None
         return None

@@ -1,7 +1,7 @@
-from Utility import Node
-from Algorithm import Algorithm
+from app.Utility import Node
+from app.Algorithm import Algorithm
 
-class HILL_CLIMBING(Algorithm):
+class GREEDY(Algorithm):
     def __init__(self, grid):
         super().__init__(grid)
 

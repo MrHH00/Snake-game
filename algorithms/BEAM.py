@@ -1,6 +1,6 @@
 
-from Utility import Node
-from Algorithm import Algorithm
+from app.Utility import Node
+from app.Algorithm import Algorithm
 
 class BEAM(Algorithm):
     def __init__(self, grid, beam_width=2):
