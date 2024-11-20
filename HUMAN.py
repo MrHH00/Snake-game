@@ -10,13 +10,13 @@ class HUMAN(Algorithm):
 
     def handle_keys(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] and self.direction != pygame.K_DOWN:
             self.direction = pygame.K_UP
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN] and self.direction != pygame.K_UP:
             self.direction = pygame.K_DOWN
-        elif keys[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT] and self.direction != pygame.K_RIGHT:
             self.direction = pygame.K_LEFT
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] and self.direction != pygame.K_LEFT:
             self.direction = pygame.K_RIGHT
 
     def run_algorithm(self, snake):

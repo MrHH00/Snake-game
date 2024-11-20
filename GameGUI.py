@@ -330,7 +330,6 @@ class GameGUI:
     def event_handler(self):
         for event in pygame.event.get():
             if self.is_quit(event):
-                print('Bye :)')
                 pygame.quit()
                 sys.exit()
 

@@ -10,7 +10,7 @@ class Menu:
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = -150
-        self.title_size = 50
+        self.title_size = 45
         self.option_size = 20
 
     def draw_cursor(self):
@@ -37,9 +37,11 @@ class MainMenu(Menu):
 
         self.cursoronePlayer = MENU_COLOR
         self.cursortwoPlayer = WHITE
+        self.cursorQuit = WHITE
 
         self.onePlayerx, self.onePlayery = self.mid_size, self.mid_size - 50
         self.twoPlayerx, self.twoPlayery = self.mid_size, self.mid_size + 0
+        self.Quitx, self.Quity = self.mid_size, self.mid_size + 50
         self.huyhoangx, self.huyhoangy = self.mid_size, self.mid_size + 150
         self.tintranx, self.tintrany = self.mid_size, self.mid_size + 200
         self.nhatanx, self.nhatany = self.mid_size, self.mid_size + 250
@@ -52,10 +54,13 @@ class MainMenu(Menu):
             self.cursoronePlayer = MENU_COLOR
         elif self.state == '2 Player':
             self.cursortwoPlayer = MENU_COLOR
+        elif self.state == 'QUIT':
+            self.cursorQuit = MENU_COLOR
             
     def clear_cursor_color(self):
         self.cursoronePlayer = WHITE
         self.cursortwoPlayer = WHITE
+        self.cursorQuit = WHITE
     
     def display_menu(self):
         self.run_display = True
@@ -67,7 +72,7 @@ class MainMenu(Menu):
             self.game.display1.fill(WINDOW_COLOR)
 
             self.game.draw_text(
-                'SNAKE EAT BANANA', size=self.title_size,
+                'SNAKE EATS BANANAS', size=self.title_size,
                 x=self.game.SIZE/2, y=self.game.SIZE/2 - 2*(CELL_SIZE + NO_OF_CELLS),
                 color=TITLE_COLOR,
             )
@@ -81,6 +86,12 @@ class MainMenu(Menu):
                 '2 Player', size=self.option_size,
                 x=self.twoPlayerx,  y=self.twoPlayery,
                 color=self.cursortwoPlayer
+            )
+            
+            self.game.draw_text(
+                'Quit', size=self.option_size,
+                x=self.Quitx,  y=self.Quity,
+                color=self.cursorQuit
             )
             
             self.game.draw_text(
@@ -115,6 +126,10 @@ class MainMenu(Menu):
             elif self.state == '2 Player':
                 Constants.twoPlayerOpt = True
                 self.game.curr_menu = self.game.TwoPlayerMenu_P1
+            elif self.state == 'QUIT':
+                pygame.quit()
+                sys.exit()
+                
             self.run_display = False
             
     def move_cursor(self):
@@ -126,19 +141,31 @@ class MainMenu(Menu):
 
                 elif self.state == '2 Player':
                     self.cursor_rect.midtop = (
+                        self.Quitx + self.offset, self.Quity)
+                    self.state = 'QUIT'
+                    
+                elif self.state == 'QUIT':
+                    self.cursor_rect.midtop = (
                         self.onePlayerx + self.offset, self.onePlayery)
-                    self.state = '1 Player'
+                    self.state = '1 Player' 
+                
 
+                
             if self.game.UPKEY:
                 if self.state == '1 Player':
                     self.cursor_rect.midtop = (
-                        self.twoPlayerx + self.offset, self.twoPlayery)
-                    self.state = '2 Player'
+                        self.Quity + self.offset, self.Quity)
+                    self.state = 'QUIT'
 
                 elif self.state == '2 Player':
                     self.cursor_rect.midtop = (
                         self.onePlayerx + self.offset, self.onePlayery)
                     self.state = '1 Player'
+                
+                elif self.state == 'QUIT':
+                    self.cursor_rect.midtop = (
+                        self.twoPlayerx + self.offset, self.twoPlayery)
+                    self.state = '2 Player'
 
 class onePlayerMenu(Menu):
     def __init__(self, game):
@@ -269,7 +296,7 @@ class onePlayerMenu(Menu):
             )
             
             self.game.draw_text(
-                'Quit', size=self.option_size,
+                'Back to Main Menu', size=self.option_size,
                 x=self.Quitx,  y=self.Quity,
                 color=self.cursorQuit
             )
@@ -514,7 +541,7 @@ class twoPlayerMenu_P1(Menu):
             )
             
             self.game.draw_text(
-                'Quit', size=self.option_size,
+                'Back to Main Menu', size=self.option_size,
                 x=self.Quitx,  y=self.Quity,
                 color=self.cursorQuit
             )
@@ -748,7 +775,7 @@ class twoPlayerMenu_P2(Menu):
             )
             
             self.game.draw_text(
-                'Quit', size=self.option_size,
+                'Back to Player 1 Menu', size=self.option_size,
                 x=self.Quitx,  y=self.Quity,
                 color=self.cursorQuit
             )
