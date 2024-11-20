@@ -46,6 +46,7 @@ class GameGUI:
 
         self.load_model = False
         self.view_path = False
+        self.view_explored = False
         
         self.banana = pygame.image.load('images/banana-30px.png').convert_alpha()
 
@@ -91,6 +92,7 @@ class GameGUI:
 
         if not controller.model_loaded:
             self.draw_path(controller,display)  # only path Ai has a path
+            self.draw_explored(controller,display)  # only path Ai has explored set
 
     def draw_grid(self,display):
         grid_color = (209,74,54)
@@ -174,6 +176,21 @@ class GameGUI:
 
                 pygame.draw.rect(display, BANNER_COLOR, path_rect, 1)
                 display.blit(shape_surf, path_rect)
+
+    def draw_explored(self,controller,display):
+        if controller.algo != None and self.view_explored:
+            for path in controller.algo.explored_set:
+                x = int(path.x * CELL_SIZE)
+                y = int(path.y * CELL_SIZE)
+
+                path_rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
+
+                shape_surf = pygame.Surface(path_rect.size, pygame.SRCALPHA)
+                pygame.draw.rect(shape_surf, EXPLOREDCOLOR, shape_surf.get_rect())
+
+                pygame.draw.rect(display, BANNER_COLOR, path_rect, 1)
+                display.blit(shape_surf, path_rect)
+
 
     def draw_snake_head(self, snake,display):
         head = snake.body[0]
@@ -384,6 +401,9 @@ class GameGUI:
                     self.BACK = True
                     self.controller1.reset()
                     self.controller2.reset()
+                    
+                elif event.key == pygame.K_y:
+                    self.view_explored = not self.view_explored
 
                 elif event.key == pygame.K_SPACE:  # space view path or hide training snakes
                     self.view_path = not self.view_path
