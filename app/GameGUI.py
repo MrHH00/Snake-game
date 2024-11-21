@@ -256,10 +256,17 @@ class GameGUI:
 
     def update_head_graphics(self,snake):
         head_relation = snake.body[1] - snake.body[0]
-        if head_relation == Vector2(1,0): snake.head = snake.head_left
-        elif head_relation == Vector2(-1,0): snake.head = snake.head_right
-        elif head_relation == Vector2(0,1): snake.head = snake.head_up
-        elif head_relation == Vector2(0,-1): snake.head = snake.head_down
+        distance_to_fruit = (snake.body[0] - snake.get_fruit()).length()
+        if distance_to_fruit <= 2:
+            if head_relation == Vector2(1, 0): snake.head = snake.head_left_eating
+            elif head_relation == Vector2(-1, 0): snake.head = snake.head_right_eating
+            elif head_relation == Vector2(0, 1): snake.head = snake.head_up_eating
+            elif head_relation == Vector2(0, -1): snake.head = snake.head_down_eating
+        else:
+            if head_relation == Vector2(1,0): snake.head = snake.head_left
+            elif head_relation == Vector2(-1,0): snake.head = snake.head_right
+            elif head_relation == Vector2(0,1): snake.head = snake.head_up
+            elif head_relation == Vector2(0,-1): snake.head = snake.head_down
         
     def update_tail_graphics(self,snake):
         tail_relation = snake.body[-2] - snake.body[-1]

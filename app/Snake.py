@@ -20,6 +20,11 @@ class Snake:
         self.head_down = pygame.image.load('images/head_down.png').convert_alpha()
         self.head_right = pygame.image.load('images/head_right.png').convert_alpha()
         self.head_left = pygame.image.load('images/head_left.png').convert_alpha()
+        
+        self.head_up_eating = pygame.image.load('images/head_up_eating.png').convert_alpha()
+        self.head_down_eating = pygame.image.load('images/head_down_eating.png').convert_alpha()
+        self.head_right_eating = pygame.image.load('images/head_right_eating.png').convert_alpha()
+        self.head_left_eating = pygame.image.load('images/head_left_eating.png').convert_alpha()
 		
         self.tail_up = pygame.image.load('images/tail_up.png').convert_alpha()
         self.tail_down = pygame.image.load('images/tail_down.png').convert_alpha()
@@ -33,6 +38,8 @@ class Snake:
         self.body_tl = pygame.image.load('images/body_tl.png').convert_alpha()
         self.body_br = pygame.image.load('images/body_br.png').convert_alpha()
         self.body_bl = pygame.image.load('images/body_bl.png').convert_alpha()
+        
+        
         self.eat_sound = pygame.mixer.Sound('sounds/carrotnom.mp3')
 
 
