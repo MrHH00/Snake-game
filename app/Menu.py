@@ -26,6 +26,7 @@ class Menu:
         )
 
     def blit_menu(self):
+        self.game.window.blit(self.game.background_left_blank, (0,0))
         self.game.window.blit(self.game.display1, (400, 0))
         # self.game.window.blit(self.game.display2, (700, 0))
         pygame.display.update()

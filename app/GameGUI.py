@@ -31,10 +31,12 @@ class GameGUI:
         self.display2 = pygame.Surface((self.SIZE, self.SIZE))
         self.background = pygame.Surface((self.SIZE, self.SIZE))
         self.background_blank = pygame.Surface((self.SIZE, self.SIZE))
-        self.background_left = pygame.Surface((self.SIZE, self.SIZE))
+        self.background_left = pygame.Surface((400, self.SIZE))
+        self.background_left_blank = pygame.Surface((400, self.SIZE))
         self.background.fill(WINDOW_COLOR)
         self.background_left.fill(WINDOW_COLOR)
         self.background_blank.fill(WINDOW_COLOR)
+        self.background_left_blank.fill(WINDOW_COLOR)
         self.window = pygame.display.set_mode((self.SIZE + 800, self.SIZE))
         self.window.fill(WINDOW_COLOR)
 
@@ -155,32 +157,32 @@ class GameGUI:
             )
         else:
             self.draw_text_surface(
-                top, size=18,
-                x=self.SIZE/2, y= 32,
-                display=self.background,
+                top, size=26,
+                x= 200, y= 50,
+                display=self.background_left,
                 color=TITLE_COLOR
             )
             self.draw_text_surface_left(
-                instruction1, size=16,
-                x=self.SIZE/2 - 150, y= 100,
+                instruction1, size=22,
+                x=self.SIZE/2 - 200, y= 100,
                 display=self.background_left,
                 color=WHITE
             )
             self.draw_text_surface_left(
-                instruction2, size=16,
-                x=self.SIZE/2 - 150, y= 150,
+                instruction2, size=22,
+                x=self.SIZE/2 - 200, y= 150,
                 display=self.background_left,
                 color=WHITE
             )
             self.draw_text_surface_left(
-                instruction3, size=16,
-                x=self.SIZE/2 - 150, y= 200,
+                instruction3, size=22,
+                x=self.SIZE/2 - 200, y= 200,
                 display=self.background_left,
                 color=WHITE
             )
             self.draw_text_surface_left(
-                instruction5, size=16,
-                x=self.SIZE/2 - 150, y= 250,
+                instruction5, size=22,
+                x=self.SIZE/2 - 200, y= 250,
                 display=self.background_left,
                 color=WHITE
             )
@@ -395,6 +397,7 @@ class GameGUI:
             )
 
             if (Constants.twoPlayerOpt == False):
+                self.window.blit(self.background_left_blank, (0, 0))
                 self.window.blit(self.display2, (400, 0))
             else:   
                 self.window.blit(self.background_blank, (400,0))
