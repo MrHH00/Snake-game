@@ -30,8 +30,12 @@ class GameGUI:
         self.display1 = pygame.Surface((self.SIZE, self.SIZE))
         self.display2 = pygame.Surface((self.SIZE, self.SIZE))
         self.background = pygame.Surface((self.SIZE, self.SIZE))
+        self.background_blank = pygame.Surface((self.SIZE, self.SIZE))
+        self.background_left = pygame.Surface((self.SIZE, self.SIZE))
         self.background.fill(WINDOW_COLOR)
-        self.window = pygame.display.set_mode((self.SIZE + 700, self.SIZE))
+        self.background_left.fill(WINDOW_COLOR)
+        self.background_blank.fill(WINDOW_COLOR)
+        self.window = pygame.display.set_mode((self.SIZE + 800, self.SIZE))
         self.window.fill(WINDOW_COLOR)
 
         self.font_name = 'Gameplay.ttf'
@@ -65,11 +69,12 @@ class GameGUI:
                 self.draw_elements(self.controller2,self.display2)
             
             if (Constants.twoPlayerOpt == False):
-                self.window.blit(self.display2, (350, 0))
+                self.window.blit(self.background_left, (0, 0))
+                self.window.blit(self.display2, (400, 0))
             else:
-                self.window.blit(self.background, (350, 0))
+                self.window.blit(self.background, (400, 0))
                 self.window.blit(self.display1, (0, 0))
-                self.window.blit(self.display2, (700, 0))
+                self.window.blit(self.display2, (800, 0))
             
 
             pygame.display.update()
@@ -95,7 +100,9 @@ class GameGUI:
             self.draw_explored(controller,display)  # only path Ai has explored set
 
     def draw_grid(self,display):
-        grid_color = (209,74,54)
+        # grid_color = (209,74,54)
+        grid_color = (196,53,41)
+        
         for row in range(NO_OF_CELLS):
             if row % 2 == 0:
                 for col in range(NO_OF_CELLS):
@@ -109,37 +116,72 @@ class GameGUI:
                         pygame.draw.rect(display, grid_color, grid_rect)                  
 
     def draw_game_stats(self, controller,display):
-        if (Constants.twoPlayerOpt):
-            if(self.TwoPlayerMenu_P1.state == 'HUMAN'):
-                instruction1 = 'W to speed up, Q to go back'
-                instruction2 = 'Space to view Ai path, W to speed up, Q to go back'
-            else:
-                instruction1 = 'Space to view Ai path, W to speed up, Q to go back'
-                instruction2 = 'Space to view Ai path, W to speed up, Q to go back'
-        elif (Constants.twoPlayerOpt == False):
-            if self.curr_menu.state != 'HUMAN':  # path Ai algo
-                instruction1 = 'Space to view Ai path, W to speed up, Q to go back'
-            else:  # human
-                instruction1 = 'W to speed up, Q to go back'
+        top = 'Game cotroller'
+        instruction1 = 'V: Ai path'
+        instruction2 = 'E: explored path'
+        instruction3 = 'W: Speed up'
+        instruction5 = 'Q: Quit'
             
         if (Constants.twoPlayerOpt):
             self.draw_text_surface(
-                instruction2, size=16,
-                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-                display=self.display2,
+                top, size=18,
+                x=self.SIZE/2, y= 32,
+                display=self.background,
+                color=TITLE_COLOR
+            )
+            self.draw_text_surface_left(
+                instruction1, size=16,
+                x=self.SIZE/2 - 85, y= 100,
+                display=self.background,
                 color=WHITE
             )
-            self.draw_text_surface(
-                instruction1, size=16,
-                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-                display=self.display1,
+            self.draw_text_surface_left(
+                instruction2, size=16,
+                x=self.SIZE/2 - 85, y= 150,
+                display=self.background,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction3, size=16,
+                x=self.SIZE/2 - 85, y= 200,
+                display=self.background,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction5, size=16,
+                x=self.SIZE/2 - 85, y= 250,
+                display=self.background,
                 color=WHITE
             )
         else:
             self.draw_text_surface(
+                top, size=18,
+                x=self.SIZE/2, y= 32,
+                display=self.background,
+                color=TITLE_COLOR
+            )
+            self.draw_text_surface_left(
                 instruction1, size=16,
-                x=self.SIZE/2, y=(CELL_SIZE * NO_OF_CELLS) - NO_OF_CELLS,
-                display=self.display2,
+                x=self.SIZE/2 - 150, y= 100,
+                display=self.background_left,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction2, size=16,
+                x=self.SIZE/2 - 150, y= 150,
+                display=self.background_left,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction3, size=16,
+                x=self.SIZE/2 - 150, y= 200,
+                display=self.background_left,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction5, size=16,
+                x=self.SIZE/2 - 150, y= 250,
+                display=self.background_left,
                 color=WHITE
             )
 
@@ -353,9 +395,10 @@ class GameGUI:
             )
 
             if (Constants.twoPlayerOpt == False):
-                self.window.blit(self.display2, (350, 0))
-            else:    
-                self.window.blit(self.display2, (700, 0))
+                self.window.blit(self.display2, (400, 0))
+            else:   
+                self.window.blit(self.background_blank, (400,0))
+                self.window.blit(self.display2, (800, 0))
                 self.window.blit(self.display1, (0, 0))
             pygame.display.update()
         self.controller1.reset()
@@ -409,10 +452,10 @@ class GameGUI:
                     self.controller1.reset()
                     self.controller2.reset()
                     
-                elif event.key == pygame.K_y:
+                elif event.key == pygame.K_e:
                     self.view_explored = not self.view_explored
 
-                elif event.key == pygame.K_SPACE:  # space view path or hide training snakes
+                elif event.key == pygame.K_v:  # space view path or hide training snakes
                     self.view_path = not self.view_path
 
                 elif event.key == pygame.K_DOWN:
@@ -441,4 +484,11 @@ class GameGUI:
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
+        display.blit(text_surface, text_rect)
+        
+    def draw_text_surface_left(self, text, size, x, y, display,color=WINDOW_COLOR): 
+        font = pygame.font.Font(self.font_name, size)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.topleft = (x, y)
         display.blit(text_surface, text_rect)
