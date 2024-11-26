@@ -15,7 +15,7 @@ class GameGUI:
         self.SCREEN_UPDATE = pygame.USEREVENT
 
         self.speed = 110
-        self.speed_up = 80
+        self.speed_up = 10
 
         pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
 
@@ -122,6 +122,7 @@ class GameGUI:
         instruction1 = 'V: Ai path'
         instruction2 = 'E: explored path'
         instruction3 = 'W: Speed up'
+        instruction4 = 'S: Speed down'
         instruction5 = 'Q: Quit'
             
         if (Constants.twoPlayerOpt):
@@ -150,8 +151,14 @@ class GameGUI:
                 color=WHITE
             )
             self.draw_text_surface_left(
-                instruction5, size=16,
+                instruction4, size=16,
                 x=self.SIZE/2 - 85, y= 250,
+                display=self.background,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction5, size=16,
+                x=self.SIZE/2 - 85, y= 300,
                 display=self.background,
                 color=WHITE
             )
@@ -181,8 +188,14 @@ class GameGUI:
                 color=WHITE
             )
             self.draw_text_surface_left(
-                instruction5, size=22,
+                instruction4, size=22,
                 x=self.SIZE/2 - 200, y= 250,
+                display=self.background_left,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                instruction5, size=22,
+                x=self.SIZE/2 - 200, y= 300,
                 display=self.background_left,
                 color=WHITE
             )
@@ -466,9 +479,12 @@ class GameGUI:
                 elif event.key == pygame.K_UP:
                     self.UPKEY = True
 
-                elif event.key == pygame.K_w:  # speed up/down by self.speed_up
-                    self.speed_up = -1 * self.speed_up
-                    self.speed = self.speed + self.speed_up
+                elif event.key == pygame.K_s:  # speed down by self.speed_up
+                    self.speed = min(110, self.speed + self.speed_up)  
+                    pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
+
+                elif event.key == pygame.K_w:  # speed up by self.speed_up
+                    self.speed = max(10, self.speed - self.speed_up)  
                     pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
 
     def reset_keys(self):
