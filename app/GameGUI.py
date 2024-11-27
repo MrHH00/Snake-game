@@ -145,6 +145,13 @@ class GameGUI:
         else:
             speed_level = f'Speed: 0'
         time = f'Time: {self.elapsed_time:.1f}'
+        if (Constants.twoPlayerOpt):            
+            Noexplored1 = f'P1 explored: {len(self.controller1.algo.explored_set)}'
+            Noexplored2 = f'P2 explored: {len(self.controller2.algo.explored_set)}'
+        else:
+            Noexplored = f'Explored: {len(controller.algo.explored_set)}'
+        # print(len(controller.algo.explored_set))
+        
         
             
         self.background.fill(WINDOW_COLOR)
@@ -186,17 +193,30 @@ class GameGUI:
                 color=WHITE
             )
             self.draw_text_surface_left(
-                speed_level, size=16,
-                x=self.background.get_width()/2 - 85, y= 500,
+                Noexplored1, size=16,
+                x=self.background.get_width()/2 - 85, y= 400,
+                display=self.background,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                Noexplored2, size=16,
+                x=self.background.get_width()/2 - 85, y= 450,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
                 time, size=16,
-                x=self.background.get_width()/2 - 85, y= 450,
+                x=self.background.get_width()/2 - 85, y= 500,
                 display=self.background,
                 color=WHITE
             )
+            self.draw_text_surface_left(
+                speed_level, size=16,
+                x=self.background.get_width()/2 - 85, y= 550,
+                display=self.background,
+                color=WHITE
+            )
+
             
         else:
             self.background_left.fill(WINDOW_COLOR)
@@ -263,14 +283,20 @@ class GameGUI:
                     color=WHITE
                 )
                 self.draw_text_surface_left(
-                    time, size=22,
+                    Noexplored, size=22,
                     x=self.SIZE/2 - 200, y= 450,
                     display=self.background_left,
                     color=WHITE
                 )
                 self.draw_text_surface_left(
-                    speed_level, size=22,
+                    time, size=22,
                     x=self.SIZE/2 - 200, y= 500,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    speed_level, size=22,
+                    x=self.SIZE/2 - 200, y= 550,
                     display=self.background_left,
                     color=WHITE
                 )
