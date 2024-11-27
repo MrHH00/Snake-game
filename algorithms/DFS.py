@@ -1,5 +1,6 @@
 from app.Utility import Node
 from app.Algorithm import Algorithm
+import random
 
 
 class DFS(Algorithm):
@@ -17,6 +18,7 @@ class DFS(Algorithm):
 
         self.explored_set.append(currentstate)  # mark visited
         neighbors = self.get_neighbors(currentstate)  # get neighbors
+        random.shuffle(neighbors)  # shuffle neighbors to explore randomly
 
         # for each neighbor
         for neighbor in neighbors:
