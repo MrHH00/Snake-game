@@ -1,4 +1,6 @@
 from app.GameGUI import GameGUI
+import pygame
+from app.Constants import *
 
 game = GameGUI()
 

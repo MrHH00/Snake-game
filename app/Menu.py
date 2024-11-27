@@ -1,4 +1,5 @@
 import pygame
+import os
 from app.Constants import *
 import app.Constants as Constants
 import sys
@@ -27,7 +28,7 @@ class Menu:
 
     def blit_menu(self):
         self.game.window.blit(self.game.background_left_blank, (0,0))
-        self.game.window.blit(self.game.display1, (400, 0))
+        self.game.window.blit(self.game.display1, (200, 0))
         # self.game.window.blit(self.game.display2, (700, 0))
         pygame.display.update()
         self.game.reset_keys()
@@ -798,8 +799,12 @@ class twoPlayerMenu_P2(Menu):
         if self.game.START:
             self.play_sound(self.press_sound)
             if self.state == 'QUIT':
+                os.environ['SDL_VIDEO_CENTERED'] = '1'
                 self.game.curr_menu = self.game.TwoPlayerMenu_P1
-            else:
+            else:   
+                # Đặt biến môi trường để thay đổi vị trí cửa sổ
+                os.environ['SDL_VIDEO_CENTERED'] = '1'
+                self.game.window = pygame.display.set_mode((self.game.SIZE + 800, self.game.SIZE))
                 self.game.playing = True
             self.run_display = False
 

@@ -27,17 +27,19 @@ class GameGUI:
         self.UPKEY, self.DOWNKEY, self.START, self.BACK = False, False, False, False
 
         self.SIZE = CELL_SIZE * NO_OF_CELLS
-        self.display1 = pygame.Surface((self.SIZE, self.SIZE))
+        self.display1 = pygame.Surface((self.SIZE+400, self.SIZE))
         self.display2 = pygame.Surface((self.SIZE, self.SIZE))
-        self.background = pygame.Surface((self.SIZE, self.SIZE))
+        self.background = pygame.Surface((200, self.SIZE))
         self.background_blank = pygame.Surface((self.SIZE, self.SIZE))
         self.background_left = pygame.Surface((400, self.SIZE))
+        self.background_right = pygame.Surface((400, self.SIZE))
         self.background_left_blank = pygame.Surface((400, self.SIZE))
         self.background.fill(WINDOW_COLOR)
         self.background_left.fill(WINDOW_COLOR)
+        self.background_right.fill(WINDOW_COLOR)
         self.background_blank.fill(WINDOW_COLOR)
         self.background_left_blank.fill(WINDOW_COLOR)
-        self.window = pygame.display.set_mode((self.SIZE + 800, self.SIZE))
+        self.window = pygame.display.set_mode((self.SIZE + 400, self.SIZE))
         self.window.fill(WINDOW_COLOR)
 
         self.font_name = 'Gameplay.ttf'
@@ -74,14 +76,15 @@ class GameGUI:
                 self.window.blit(self.background_left, (0, 0))
                 self.window.blit(self.display2, (400, 0))
             else:
-                self.window.blit(self.background, (400, 0))
                 self.window.blit(self.display1, (0, 0))
+                self.window.blit(self.background, (600, 0))
                 self.window.blit(self.display2, (800, 0))
             
 
             pygame.display.update()
             self.clock.tick(60)
             self.reset_keys()
+        self.window = pygame.display.set_mode((self.SIZE + 400, self.SIZE))
 
     def draw_elements(self,controller,display):
         # draw banner and stats
@@ -135,43 +138,43 @@ class GameGUI:
         if (Constants.twoPlayerOpt):
             self.draw_text_surface(
                 top, size=18,
-                x=self.SIZE/2, y= 32,
+                x=self.background.get_width()/2, y= 32,
                 display=self.background,
                 color=TITLE_COLOR
             )
             self.draw_text_surface_left(
                 instruction1, size=16,
-                x=self.SIZE/2 - 85, y= 100,
+                x=self.background.get_width()/2 - 85, y= 100,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
                 instruction2, size=16,
-                x=self.SIZE/2 - 85, y= 150,
+                x=self.background.get_width()/2 - 85, y= 150,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
                 instruction3, size=16,
-                x=self.SIZE/2 - 85, y= 200,
+                x=self.background.get_width()/2 - 85, y= 200,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
                 instruction4, size=16,
-                x=self.SIZE/2 - 85, y= 250,
+                x=self.background.get_width()/2 - 85, y= 250,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
                 instruction5, size=16,
-                x=self.SIZE/2 - 85, y= 300,
+                x=self.background.get_width()/2 - 85, y= 300,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
                 speed_level, size=16,
-                x=self.SIZE/2 - 85, y= 500,
+                x=self.background.get_width()/2 - 85, y= 500,
                 display=self.background,
                 color=WHITE
             )
@@ -410,10 +413,6 @@ class GameGUI:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         again = True
-                        break
-                    if event.key == pygame.K_s:
-                        again = True
-                        self.controller.save_model()
                         break
 
             self.display2.fill(WINDOW_COLOR)
