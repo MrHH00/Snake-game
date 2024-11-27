@@ -16,6 +16,8 @@ class GameGUI:
 
         self.speed = 110
         self.speed_up = 10
+        
+        self.elapsed_time = 0
 
         pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
 
@@ -59,11 +61,19 @@ class GameGUI:
         self.banana = pygame.image.load('images/banana-30px.png').convert_alpha()
 
     def game_loop(self):
+        start_time = pygame.time.get_ticks()
+        
         while self.playing:
+            # Start time
+            
             self.event_handler()
 
             if self.BACK:
                 self.playing = False
+                
+            # Calculate elapsed time
+            current_time = pygame.time.get_ticks()
+            self.elapsed_time = (current_time - start_time) / 1000  # Convert to seconds
 
             self.display1.fill(WINDOW_COLOR)
             self.display2.fill(WINDOW_COLOR)
@@ -80,11 +90,12 @@ class GameGUI:
                 self.window.blit(self.display2, (800, 0))
                 self.window.blit(self.background, (600, 0))
                 
-            
+
 
             pygame.display.update()
             self.clock.tick(60)
             self.reset_keys()
+        
         self.window = pygame.display.set_mode((self.SIZE + 400, self.SIZE))
 
     def draw_elements(self,controller,display):
@@ -133,6 +144,7 @@ class GameGUI:
             speed_level = f'Speed: {(110 - self.speed) // 10 + 1}'
         else:
             speed_level = f'Speed: 0'
+        time = f'Time: {self.elapsed_time:.1f}'
         
             
         self.background.fill(WINDOW_COLOR)
@@ -179,6 +191,13 @@ class GameGUI:
                 display=self.background,
                 color=WHITE
             )
+            self.draw_text_surface_left(
+                time, size=16,
+                x=self.background.get_width()/2 - 85, y= 450,
+                display=self.background,
+                color=WHITE
+            )
+            
         else:
             self.background_left.fill(WINDOW_COLOR)
             self.draw_text_surface(
@@ -240,6 +259,12 @@ class GameGUI:
                 self.draw_text_surface_left(
                     instruction5, size=22,
                     x=self.SIZE/2 - 200, y= 300,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    time, size=22,
+                    x=self.SIZE/2 - 200, y= 450,
                     display=self.background_left,
                     color=WHITE
                 )
