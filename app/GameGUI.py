@@ -32,11 +32,11 @@ class GameGUI:
         self.background = pygame.Surface((200, self.SIZE))
         self.background_blank = pygame.Surface((self.SIZE, self.SIZE))
         self.background_left = pygame.Surface((400, self.SIZE))
-        self.background_right = pygame.Surface((400, self.SIZE))
+        self.background_right_blank = pygame.Surface((400, self.SIZE))
         self.background_left_blank = pygame.Surface((400, self.SIZE))
         self.background.fill(WINDOW_COLOR)
         self.background_left.fill(WINDOW_COLOR)
-        self.background_right.fill(WINDOW_COLOR)
+        self.background_right_blank.fill(WINDOW_COLOR)
         self.background_blank.fill(WINDOW_COLOR)
         self.background_left_blank.fill(WINDOW_COLOR)
         self.window = pygame.display.set_mode((self.SIZE + 400, self.SIZE))
@@ -77,8 +77,9 @@ class GameGUI:
                 self.window.blit(self.display2, (400, 0))
             else:
                 self.window.blit(self.display1, (0, 0))
-                self.window.blit(self.background, (600, 0))
                 self.window.blit(self.display2, (800, 0))
+                self.window.blit(self.background, (600, 0))
+                
             
 
             pygame.display.update()
@@ -415,8 +416,8 @@ class GameGUI:
                         again = True
                         break
 
-            self.display2.fill(WINDOW_COLOR)
             self.display1.fill(WINDOW_COLOR)
+            self.display2.fill(WINDOW_COLOR)
 
             if (Constants.twoPlayerOpt == False):
                 high_score2 = f'{self.OnePlayerMenu.state} Score: {self.controller2.get_score()}'
@@ -457,11 +458,12 @@ class GameGUI:
 
             if (Constants.twoPlayerOpt == False):
                 self.window.blit(self.background_left_blank, (0, 0))
-                self.window.blit(self.display2, (400, 0))
+                self.window.blit(self.display2, (200, 0))
+                self.window.blit(self.background_right_blank, (800, 0))
             else:   
                 self.window.blit(self.background_blank, (400,0))
-                self.window.blit(self.display2, (800, 0))
                 self.window.blit(self.display1, (0, 0))
+                self.window.blit(self.display2, (800, 0))                
             pygame.display.update()
         self.controller1.reset()
         self.controller2.reset()
