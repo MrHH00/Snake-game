@@ -124,7 +124,14 @@ class GameGUI:
         instruction3 = 'W: Speed up'
         instruction4 = 'S: Speed down'
         instruction5 = 'Q: Quit'
+        # speed = f'Speed: {self.speed}'
+        if(self.speed <= 110):
+            speed_level = f'Speed: {(110 - self.speed) // 10 + 1}'
+        else:
+            speed_level = f'Speed: 0'
+        
             
+        self.background.fill(WINDOW_COLOR)
         if (Constants.twoPlayerOpt):
             self.draw_text_surface(
                 top, size=18,
@@ -162,43 +169,83 @@ class GameGUI:
                 display=self.background,
                 color=WHITE
             )
+            self.draw_text_surface_left(
+                speed_level, size=16,
+                x=self.SIZE/2 - 85, y= 500,
+                display=self.background,
+                color=WHITE
+            )
         else:
+            self.background_left.fill(WINDOW_COLOR)
             self.draw_text_surface(
                 top, size=26,
                 x= 200, y= 50,
                 display=self.background_left,
                 color=TITLE_COLOR
             )
-            self.draw_text_surface_left(
-                instruction1, size=22,
-                x=self.SIZE/2 - 200, y= 100,
-                display=self.background_left,
-                color=WHITE
-            )
-            self.draw_text_surface_left(
-                instruction2, size=22,
-                x=self.SIZE/2 - 200, y= 150,
-                display=self.background_left,
-                color=WHITE
-            )
-            self.draw_text_surface_left(
-                instruction3, size=22,
-                x=self.SIZE/2 - 200, y= 200,
-                display=self.background_left,
-                color=WHITE
-            )
-            self.draw_text_surface_left(
-                instruction4, size=22,
-                x=self.SIZE/2 - 200, y= 250,
-                display=self.background_left,
-                color=WHITE
-            )
-            self.draw_text_surface_left(
-                instruction5, size=22,
-                x=self.SIZE/2 - 200, y= 300,
-                display=self.background_left,
-                color=WHITE
-            )
+            if self.OnePlayerMenu.state == 'HUMAN':
+                self.draw_text_surface_left(
+                    instruction3, size=22,
+                    x=self.SIZE/2 - 200, y= 200,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction4, size=22,
+                    x=self.SIZE/2 - 200, y= 250,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction5, size=22,
+                    x=self.SIZE/2 - 200, y= 300,
+                    display=self.background_left,
+                    color=WHITE
+                )
+            else:
+                self.draw_text_surface(
+                    top, size=26,
+                    x= 200, y= 50,
+                    display=self.background_left,
+                    color=TITLE_COLOR
+                )
+                self.draw_text_surface_left(
+                    instruction1, size=22,
+                    x=self.SIZE/2 - 200, y= 100,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction2, size=22,
+                    x=self.SIZE/2 - 200, y= 150,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction3, size=22,
+                    x=self.SIZE/2 - 200, y= 200,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction4, size=22,
+                    x=self.SIZE/2 - 200, y= 250,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction5, size=22,
+                    x=self.SIZE/2 - 200, y= 300,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    speed_level, size=22,
+                    x=self.SIZE/2 - 200, y= 500,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                
 
         # current Algo Title
         if (Constants.twoPlayerOpt == False):
@@ -480,10 +527,14 @@ class GameGUI:
                     self.UPKEY = True
 
                 elif event.key == pygame.K_s:  # speed down by self.speed_up
-                    self.speed = min(110, self.speed + self.speed_up)  
+                    self.speed = self.speed + self.speed_up
+                    if self.speed > 110 and self.speed != 999990:
+                        self.speed = 1000000
                     pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
 
                 elif event.key == pygame.K_w:  # speed up by self.speed_up
+                    if self.speed > 110 and self.speed <= 1000000:
+                        self.speed = 120
                     self.speed = max(10, self.speed - self.speed_up)  
                     pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
 
