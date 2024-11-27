@@ -18,6 +18,7 @@ class GameGUI:
         self.speed_up = 10
         
         self.elapsed_time = 0
+        self.totaltime = 0
 
         pygame.time.set_timer(self.SCREEN_UPDATE, self.speed)
 
@@ -45,7 +46,7 @@ class GameGUI:
         self.window.fill(WINDOW_COLOR)
 
         self.font_name = 'Gameplay.ttf'
-
+        
         # ---- all menus ----
         self.main_menu = MainMenu(self)
         # self.main_menu = onePlayerMenu(self)
@@ -150,6 +151,7 @@ class GameGUI:
             Noexplored2 = f'P2 explored: {len(self.controller2.algo.explored_set)}'
         else:
             Noexplored = f'Explored: {len(controller.algo.explored_set)}'
+            self.totaltime += self.elapsed_time
         # print(len(controller.algo.explored_set))
         
         
@@ -453,6 +455,7 @@ class GameGUI:
         self.draw_text_surface(score_text, 20, score_x, score_y, display,WINDOW_COLOR)
 
     def game_over(self):
+        print(self.totaltime)
         again = False
 
         while not again:
