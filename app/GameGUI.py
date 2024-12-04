@@ -517,8 +517,7 @@ class GameGUI:
             list_execution_time2.clear()
             list_explored2.clear()
             list_score2.clear()   
-            pygame.quit()
-            sys.exit()   
+            os.environ['SDL_VIDEO_CENTERED'] = '1'
         elif (Constants.twoPlayerOpt == True and self.TwoPlayerMenu_P1.state != 'HUMAN' and Constants.callStatistics == True):
             # Draw the graph
             plt.figure(figsize=(10, 5))
@@ -550,9 +549,8 @@ class GameGUI:
             list_explored1.clear()
             list_explored2.clear()
             list_score1.clear()
-            list_score2.clear()                
-            pygame.quit()
-            sys.exit()
+            list_score2.clear()
+                       
             
         while not again:
             for event in pygame.event.get():
