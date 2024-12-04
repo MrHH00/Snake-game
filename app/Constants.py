@@ -1,4 +1,5 @@
 twoPlayerOpt = False
+callStatistics = False
 
 # screen dimensions
 CELL_SIZE = 30

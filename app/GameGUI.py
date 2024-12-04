@@ -145,7 +145,8 @@ class GameGUI:
         instruction2 = 'E: explored path'
         instruction3 = 'W: Speed up'
         instruction4 = 'S: Speed down'
-        instruction5 = 'Q: Quit'
+        instruction5 = f'D: Statistics: {"On" if Constants.callStatistics else "Off"}'
+        instruction6 = 'Q: Quit'
         # speed = f'Speed: {self.speed}'
         if(self.speed <= 110):
             speed_level = f'Speed: {(110 - self.speed) // 10 + 1}'
@@ -201,26 +202,32 @@ class GameGUI:
                 color=WHITE
             )
             self.draw_text_surface_left(
-                Noexplored1, size=16,
-                x=self.background.get_width()/2 - 85, y= 400,
+                instruction6, size=16,
+                x=self.background.get_width()/2 - 85, y= 350,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
-                Noexplored2, size=16,
-                x=self.background.get_width()/2 - 85, y= 450,
+                Noexplored1, size=14,
+                x=self.background.get_width()/2 - 85, y= 420,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
-                time, size=16,
+                Noexplored2, size=14,
+                x=self.background.get_width()/2 - 85, y= 460,
+                display=self.background,
+                color=WHITE
+            )
+            self.draw_text_surface_left(
+                time, size=14,
                 x=self.background.get_width()/2 - 85, y= 500,
                 display=self.background,
                 color=WHITE
             )
             self.draw_text_surface_left(
-                speed_level, size=16,
-                x=self.background.get_width()/2 - 85, y= 550,
+                speed_level, size=14,
+                x=self.background.get_width()/2 - 85, y= 540,
                 display=self.background,
                 color=WHITE
             )
@@ -287,6 +294,12 @@ class GameGUI:
                 self.draw_text_surface_left(
                     instruction5, size=22,
                     x=self.SIZE/2 - 200, y= 300,
+                    display=self.background_left,
+                    color=WHITE
+                )
+                self.draw_text_surface_left(
+                    instruction6, size=22,
+                    x=self.SIZE/2 - 200, y= 350,
                     display=self.background_left,
                     color=WHITE
                 )
@@ -481,7 +494,8 @@ class GameGUI:
         global list_score2
         global list_explored2
         global list_execution_time2
-        if(Constants.twoPlayerOpt == False and self.OnePlayerMenu.state != 'HUMAN'):
+        # if(Constants.callStatistics == True):
+        if(Constants.twoPlayerOpt == False and self.OnePlayerMenu.state != 'HUMAN' and Constants.callStatistics == True):
             # Draw the graph
             plt.figure(figsize=(10, 5))
             plt.plot(list_score2, list_explored2, label=self.OnePlayerMenu.state, marker='.' , linestyle='-', color=(209 / 255, 74 / 255, 54 / 255))
@@ -503,7 +517,9 @@ class GameGUI:
             list_execution_time2.clear()
             list_explored2.clear()
             list_score2.clear()   
-        elif (Constants.twoPlayerOpt == True and self.TwoPlayerMenu_P1.state != 'HUMAN'):
+            pygame.quit()
+            sys.exit()   
+        elif (Constants.twoPlayerOpt == True and self.TwoPlayerMenu_P1.state != 'HUMAN' and Constants.callStatistics == True):
             # Draw the graph
             plt.figure(figsize=(10, 5))
             red_line_description = self.TwoPlayerMenu_P1.state
@@ -534,8 +550,9 @@ class GameGUI:
             list_explored1.clear()
             list_explored2.clear()
             list_score1.clear()
-            list_score2.clear()
-            
+            list_score2.clear()                
+            pygame.quit()
+            sys.exit()
             
         while not again:
             for event in pygame.event.get():
@@ -652,6 +669,9 @@ class GameGUI:
                     
                 elif event.key == pygame.K_e:
                     self.view_explored = not self.view_explored
+                
+                elif event.key == pygame.K_d:
+                    Constants.callStatistics = not Constants.callStatistics
 
                 elif event.key == pygame.K_v:  # space view path or hide training snakes
                     self.view_path = not self.view_path
