@@ -5,8 +5,12 @@ from app.Menu import *
 from app.GameController import GameController
 from pygame.math import Vector2
 import sys
+import matplotlib.pyplot as plt
 
-
+list_score1 = []
+list_explored1 = []
+list_score2 = []
+list_explored2 = []
 class GameGUI:
     def __init__(self):
         pygame.init()
@@ -450,14 +454,58 @@ class GameGUI:
 
     def draw_score(self,controller,display):
         score_text = 'Score: ' + str(controller.get_score()) 
+        # list_score.append(controller.get_score())
+        # list_explored.append(len(controller.algo.explored_set))
+        if (controller is self.controller2):
+            list_score2.append(controller.get_score())
+            list_explored2.append(len(controller.algo.explored_set))
+        elif (controller is self.controller1):
+            list_score1.append(controller.get_score())
+            list_explored1.append(len(controller.algo.explored_set))
         score_x = self.SIZE - (CELL_SIZE + 2*len(score_text)) - 20
         score_y = CELL_SIZE
         self.draw_text_surface(score_text, 20, score_x, score_y, display,WINDOW_COLOR)
+        
 
     def game_over(self):
         print(self.totaltime)
+        
         again = False
-
+        global list_score1
+        global list_explored1
+        global list_score2
+        global list_explored2
+        if(Constants.twoPlayerOpt == False and self.OnePlayerMenu.state != 'HUMAN'):
+            plt.figure(figsize=(10, 5))
+            plt.plot(list_score2, list_explored2, label=self.OnePlayerMenu.state, marker='.' , linestyle='-', color=(209 / 255, 74 / 255, 54 / 255))
+            plt.title('Scores vs Total Explored Nodes')
+            plt.xlabel('Scores')
+            plt.ylabel('Total Explored Nodes')
+            plt.grid(True)
+            plt.legend()
+            plt.show()
+            list_explored2.clear()
+            list_score2.clear()   
+        elif (Constants.twoPlayerOpt == True and self.TwoPlayerMenu_P1.state != 'HUMAN'):
+            plt.figure(figsize=(10, 5))
+            red_line_description = self.TwoPlayerMenu_P1.state
+            blue_line_description = self.TwoPlayerMenu_P2.state
+            print(red_line_description)
+            print(blue_line_description)
+            plt.plot(list_score1, list_explored1, label=red_line_description, marker='.' , linestyle='-', color=(209 / 255, 74 / 255, 54 / 255))
+            plt.plot(list_score2, list_explored2, label=blue_line_description, marker='.' , linestyle='-', color=(0.36, 0.48, 0.98))
+            plt.title('Scores vs Total Explored Nodes')
+            plt.xlabel('Scores')
+            plt.ylabel('Total Explored Nodes')
+            plt.grid(True)
+            plt.legend()
+            plt.show()
+            list_explored1.clear()
+            list_explored2.clear()
+            list_score1.clear()
+            list_score2.clear()
+            
+            
         while not again:
             for event in pygame.event.get():
                 if self.is_quit(event):
@@ -521,6 +569,7 @@ class GameGUI:
             pygame.display.update()
         self.controller1.reset()
         self.controller2.reset()
+
 
     def is_quit(self, event):
         # user presses exit icon
