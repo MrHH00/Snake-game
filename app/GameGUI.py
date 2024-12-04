@@ -468,7 +468,7 @@ class GameGUI:
         
 
     def game_over(self):
-        print(self.totaltime)
+        # print(self.totaltime)
         
         again = False
         global list_score1
@@ -476,29 +476,48 @@ class GameGUI:
         global list_score2
         global list_explored2
         if(Constants.twoPlayerOpt == False and self.OnePlayerMenu.state != 'HUMAN'):
+            # Draw the graph
             plt.figure(figsize=(10, 5))
             plt.plot(list_score2, list_explored2, label=self.OnePlayerMenu.state, marker='.' , linestyle='-', color=(209 / 255, 74 / 255, 54 / 255))
             plt.title('Scores vs Total Explored Nodes')
             plt.xlabel('Scores')
             plt.ylabel('Total Explored Nodes')
+            
+            # Note for avg explored nodes
+            algo_name = self.OnePlayerMenu.state  # Giả sử tên thuật toán được lưu trong biến này
+            avg = round(sum(list_explored2) / len(list_explored2), 3) if list_explored2 else 0  # Tính giá trị trung bình
+            plt.figtext(0.5, 0.05, f"Avg. Explored Nodes for {algo_name} is {avg} within {list_score2[len(list_score2)-1]} points", ha="center", fontsize=10, color=(209 / 255, 74 / 255, 54 / 255))
+            
             plt.grid(True)
             plt.legend()
+            plt.tight_layout()  # Giúp điều chỉnh bố cục cho hợp lý
+            plt.subplots_adjust(bottom=0.2)  # Điều chỉnh khoảng cách giữa đồ thị và chú thích
             plt.show()
             list_explored2.clear()
             list_score2.clear()   
         elif (Constants.twoPlayerOpt == True and self.TwoPlayerMenu_P1.state != 'HUMAN'):
+            # Draw the graph
             plt.figure(figsize=(10, 5))
             red_line_description = self.TwoPlayerMenu_P1.state
             blue_line_description = self.TwoPlayerMenu_P2.state
-            print(red_line_description)
-            print(blue_line_description)
+            # print(red_line_description)
+            # print(blue_line_description)
             plt.plot(list_score1, list_explored1, label=red_line_description, marker='.' , linestyle='-', color=(209 / 255, 74 / 255, 54 / 255))
             plt.plot(list_score2, list_explored2, label=blue_line_description, marker='.' , linestyle='-', color=(0.36, 0.48, 0.98))
             plt.title('Scores vs Total Explored Nodes')
             plt.xlabel('Scores')
             plt.ylabel('Total Explored Nodes')
+            
+            # Note for avg explored nodes
+            avg1 = round(sum(list_explored1) / len(list_explored1), 3) if list_explored1 else 0  # Tính giá trị trung bình cho thuật toán 1
+            avg2 = round(sum(list_explored2) / len(list_explored2), 3) if list_explored2 else 0  # Tính giá trị trung bình cho thuật toán 2
+            plt.figtext(0.5, 0.07, f"Avg. Explored Nodes for {red_line_description} is {avg1} within {list_score1[len(list_score1)-1]} points", ha="center", fontsize=10, color=(209 / 255, 74 / 255, 54 / 255))
+            plt.figtext(0.5, 0.03, f"Avg. Explored Nodes for {blue_line_description} is {avg2} within {list_score2[len(list_score2)-1]} points", ha="center", fontsize=10, color=(0.36, 0.48, 0.98))
+    
+            
             plt.grid(True)
             plt.legend()
+            plt.subplots_adjust(bottom=0.2)  # Điều chỉnh khoảng cách giữa đồ thị và chú thích
             plt.show()
             list_explored1.clear()
             list_explored2.clear()
