@@ -15,6 +15,7 @@ class Snake:
         self.life_time = 0
         self.steps = 0
         self.hidden = hidden
+        self.execution_time = 0
         
         self.head_up = pygame.image.load('images/head_up.png').convert_alpha()
         self.head_down = pygame.image.load('images/head_down.png').convert_alpha()

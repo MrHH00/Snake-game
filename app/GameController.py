@@ -12,6 +12,7 @@ from algorithms.HUMAN import HUMAN
 from algorithms.BestFirstSearch import BestFirstSearch
 from algorithms.UCS import UCS
 from algorithms.BeamSearch import BeamSearch
+import time
 
 
 class GameController:
@@ -144,7 +145,10 @@ class GameController:
         if isinstance(self.algo, HUMAN):
             self.update_human()
         else:
+            start_time = time.time()  # Bắt đầu đo thời gian
             pos = self.algo.run_algorithm(self.snake)
+            end_time = time.time()  # Kết thúc đo thời gian  
+            self.snake.execution_time = (end_time - start_time) * 1000  # Tính thời gian thực thi
             self.update_path_finding_algo(pos)
 
     def keep_moving(self):

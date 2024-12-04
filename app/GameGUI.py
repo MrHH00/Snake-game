@@ -9,8 +9,10 @@ import matplotlib.pyplot as plt
 
 list_score1 = []
 list_explored1 = []
+list_execution_time1 = []
 list_score2 = []
 list_explored2 = []
+list_execution_time2 = []
 class GameGUI:
     def __init__(self):
         pygame.init()
@@ -459,9 +461,11 @@ class GameGUI:
         if (controller is self.controller2):
             list_score2.append(controller.get_score())
             list_explored2.append(len(controller.algo.explored_set))
+            list_execution_time2.append(controller.snake.execution_time)
         elif (controller is self.controller1):
             list_score1.append(controller.get_score())
             list_explored1.append(len(controller.algo.explored_set))
+            list_execution_time1.append(controller.snake.execution_time)
         score_x = self.SIZE - (CELL_SIZE + 2*len(score_text)) - 20
         score_y = CELL_SIZE
         self.draw_text_surface(score_text, 20, score_x, score_y, display,WINDOW_COLOR)
@@ -473,8 +477,10 @@ class GameGUI:
         again = False
         global list_score1
         global list_explored1
+        global list_execution_time1
         global list_score2
         global list_explored2
+        global list_execution_time2
         if(Constants.twoPlayerOpt == False and self.OnePlayerMenu.state != 'HUMAN'):
             # Draw the graph
             plt.figure(figsize=(10, 5))
@@ -486,7 +492,8 @@ class GameGUI:
             # Note for avg explored nodes
             algo_name = self.OnePlayerMenu.state  # Giả sử tên thuật toán được lưu trong biến này
             avg = round(sum(list_explored2) / len(list_explored2), 3) if list_explored2 else 0  # Tính giá trị trung bình
-            plt.figtext(0.5, 0.05, f"Avg. Explored Nodes for {algo_name} is {avg} within {list_score2[len(list_score2)-1]} points", ha="center", fontsize=10, color=(209 / 255, 74 / 255, 54 / 255))
+            avg_time = round(sum(list_execution_time2) / len(list_execution_time2), 3) if list_execution_time2 else 0  # Tính giá trị trung bình
+            plt.figtext(0.5, 0.05, f"Avg. Explored Nodes of {algo_name}: {avg}; Points: {list_score2[len(list_score2)-1]}; Avg. Execution Time: {avg_time} ms", ha="center", fontsize=10, color=(209 / 255, 74 / 255, 54 / 255))
             
             plt.grid(True)
             plt.legend()
@@ -511,8 +518,10 @@ class GameGUI:
             # Note for avg explored nodes
             avg1 = round(sum(list_explored1) / len(list_explored1), 3) if list_explored1 else 0  # Tính giá trị trung bình cho thuật toán 1
             avg2 = round(sum(list_explored2) / len(list_explored2), 3) if list_explored2 else 0  # Tính giá trị trung bình cho thuật toán 2
-            plt.figtext(0.5, 0.07, f"Avg. Explored Nodes for {red_line_description} is {avg1} within {list_score1[len(list_score1)-1]} points", ha="center", fontsize=10, color=(209 / 255, 74 / 255, 54 / 255))
-            plt.figtext(0.5, 0.03, f"Avg. Explored Nodes for {blue_line_description} is {avg2} within {list_score2[len(list_score2)-1]} points", ha="center", fontsize=10, color=(0.36, 0.48, 0.98))
+            avg_time1 = round(sum(list_execution_time1) / len(list_execution_time1), 3) if list_execution_time1 else 0  # Tính giá trị trung bình
+            avg_time2 = round(sum(list_execution_time2) / len(list_execution_time2), 3) if list_execution_time2 else 0  # Tính giá trị trung bình
+            plt.figtext(0.5, 0.07, f"Avg. Explored Nodes of {red_line_description}: {avg1}; Points: {list_score1[len(list_score1)-1]}; Avg. Execution Time: {avg_time1} ms", ha="center", fontsize=10, color=(209 / 255, 74 / 255, 54 / 255))
+            plt.figtext(0.5, 0.03, f"Avg. Explored Nodes of {blue_line_description}: {avg2}; Points: {list_score2[len(list_score2)-1]}; Avg. Execution Time: {avg_time2} ms", ha="center", fontsize=10, color=(0.36, 0.48, 0.98))
     
             
             plt.grid(True)
