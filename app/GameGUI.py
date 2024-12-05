@@ -513,12 +513,11 @@ class GameGUI:
             plt.legend()
             plt.tight_layout()  # Giúp điều chỉnh bố cục cho hợp lý
             plt.subplots_adjust(bottom=0.2)  # Điều chỉnh khoảng cách giữa đồ thị và chú thích
-            plt.show(block=True)
+            plt.show()
             list_execution_time2.clear()
             list_explored2.clear()
             list_score2.clear()  
-            pygame.quit()
-            sys.exit()
+
         elif (Constants.twoPlayerOpt == True and self.TwoPlayerMenu_P1.state != 'HUMAN' and Constants.callStatistics == True):
             # Draw the graph
             plt.figure(figsize=(10, 5))
@@ -544,17 +543,14 @@ class GameGUI:
             plt.grid(True)
             plt.legend()
             plt.subplots_adjust(bottom=0.2)  # Điều chỉnh khoảng cách giữa đồ thị và chú thích
-            plt.show(block=True)
+            plt.show()
             list_execution_time1.clear()
             list_execution_time2.clear()
             list_explored1.clear()
             list_explored2.clear()
             list_score1.clear()
             list_score2.clear()
-            pygame.quit()
-            sys.exit()
                        
-            
         while not again:
             for event in pygame.event.get():
                 if self.is_quit(event):
